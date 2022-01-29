@@ -1,0 +1,116 @@
+.suggestions__head--mobile { 
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+}
+
+.suggestions__head--mobile__title {
+    color: var(--white-1);
+}
+
+.suggestions__head--mobile__menu:hover {
+    cursor: pointer;
+}
+
+.suggestions__head--mobile__sidebar {
+    position: relative;
+}
+
+.suggestions__head--mobile__sidebar__overlay {
+    width: 100%;
+    min-height: calc(100vh - 84px);
+    z-index: 10;
+    background-color: hsl(0, 0%, 59%, 100%);
+}
+
+.suggestions__head--mobile__sidebar__content {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 11;
+    min-height: calc(100vh - 84px);
+    background-color: var(--white-3);
+    padding: 1.5rem;
+    max-width: 70%;
+}
+
+.suggestions__head--mobile__sidebar__content__suggestion-selectors {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    background-color: var(--white-1);
+    border-radius: 10px;
+    padding: 1.5rem 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.suggestions__head--mobile__sidebar__content__roadmap-stats {
+    padding: 1rem 1rem;
+    background-color: var(--white-1);
+    border-radius: 10px;
+}
+
+.suggestions__head--mobile__sidebar__content__roadmap-stats__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.5rem
+}
+
+.suggestions__head--mobile__sidebar__content__roadmap-stats__header p {
+    font-weight: bold;
+    font-size: 1.125rem;
+}
+
+.suggestions__head--mobile__sidebar__content__roadmap-stats ul {
+    /* margin-left: 1rem; */
+    list-style: inside;
+}
+
+.suggestions__head--mobile__sidebar__content__roadmap-stats ul li:nth-child(1)::marker { 
+    color: var(--orange);
+}
+
+.suggestions__head--mobile__sidebar__content__roadmap-stats ul li:nth-child(2)::marker { 
+    color: var(--purple);
+}
+
+.suggestions__head--mobile__sidebar__content__roadmap-stats ul li:nth-child(3)::marker { 
+    color: var(--blue-1);
+}
+
+.btn { 
+    border-radius: 7px;
+    border-style: none; 
+}
+
+.btn--suggestion-selector {
+    background-color: var(--white-3);
+    padding: 0.5rem 1rem;
+    color: var(--blue-2);
+    font-weight: bold;
+}
+
+.btn--view {
+    background: transparent;
+    color: var(--blue-2);
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+.selected { 
+    color: var(--white-1);
+    background-color: var(--blue-2);
+}
+
+
+@media screen and (min-width: 375px) {
+    .suggestions__head--mobile { 
+        background-image: url(../../assets/suggestions/mobile/background-header.png);
+        background-repeat: no-repeat;
+        background-size: cover;
+        padding: 1.5rem;
+    }
+}
