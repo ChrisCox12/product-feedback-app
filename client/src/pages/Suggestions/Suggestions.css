@@ -1,21 +1,39 @@
-.suggestions__head--mobile { 
+.suggestions {
+    position: relative;
+    overflow: hidden;
+}
+
+.suggestions__head {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.suggestions__head__menu:hover {
+    cursor: pointer;
+}
+
+
+/* .suggestions__head--mobile { 
     width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
     position: relative;
-}
+} */
 
-.suggestions__head--mobile__title {
+/* .suggestions__head--mobile__title {
     color: var(--white-1);
 }
 
 .suggestions__head--mobile__menu:hover {
     cursor: pointer;
-}
+} */
 
-.suggestions__head--mobile__sidebar {
+/* .suggestions__head--mobile__sidebar {
     position: relative;
+    overflow: hidden;
 }
 
 .suggestions__head--mobile__sidebar__overlay {
@@ -23,6 +41,7 @@
     min-height: calc(100vh - 84px);
     z-index: 10;
     background-color: hsl(0, 0%, 59%, 100%);
+    opacity: 0;
 }
 
 .suggestions__head--mobile__sidebar__content {
@@ -34,6 +53,11 @@
     background-color: var(--white-3);
     padding: 1.5rem;
     max-width: 70%;
+
+    transform: translateX(100%);
+    transition-property: all;
+    transition-duration: 0.25s;
+    transition-timing-function: ease-in;
 }
 
 .suggestions__head--mobile__sidebar__content__suggestion-selectors {
@@ -65,7 +89,6 @@
 }
 
 .suggestions__head--mobile__sidebar__content__roadmap-stats ul {
-    /* margin-left: 1rem; */
     list-style: inside;
 }
 
@@ -79,11 +102,67 @@
 
 .suggestions__head--mobile__sidebar__content__roadmap-stats ul li:nth-child(3)::marker { 
     color: var(--blue-1);
+} */
+
+.suggestions__sort-bar {
+    background-color: var(--blue-4);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: var(--white-1);
+}
+
+.suggestions__suggested-feedbacks {
+    background-color: var(--white-3);
+}
+
+/* .suggestions__sidebar {
+    position: absolute;
+    top: calc(84px + 55px);
+    left: 0;
+    width: 100%;
+}
+
+.suggestions__sidebar__overlay {
+    min-height: calc(100vh - (84px + 55px));
+    width: 100%;
+} */
+
+.suggestions__overlay {
+    /* min-height: calc(100vh - 84px); */
+    width: 100%;
+    position: absolute;
+    top: 84px;
+    z-index: 99;
+    background-color: hsla(0, 3%, 7%, 0.6);
+
+    opacity: 0;
+    visibility: hidden;
+}
+
+.suggestions__sidebar__content {
+    position: absolute;
+    top: 84px;
+    right: 0;
+    width: 70%;
+    min-height: calc(100vh - 84px);
+    background-color: var(--white-3);
+    padding: 1.75rem 1.5rem 0;
+    z-index: 100;
+    transform: translateX(100%);
+
+    transition-property: all;
+    transition-duration: 0.25s;
+    transition-timing-function: ease-in-out;
 }
 
 .btn { 
     border-radius: 7px;
     border-style: none; 
+}
+
+.btn:hover { 
+    cursor: pointer;
 }
 
 .btn--suggestion-selector {
@@ -100,17 +179,85 @@
     text-decoration: underline;
 }
 
+.btn--add-feedback {
+    background-color: var(--purple);
+    color: var(--white-1);
+    border-radius: 10px;
+}
+
 .selected { 
     color: var(--white-1);
     background-color: var(--blue-2);
 }
 
+.showSidebar {
+    transform: translateX(0%);
+}
+
+.hideOverlay {
+    opacity: 0;
+    animation: fadeOutOverlay 0.25s;
+    visibility: hidden;
+}
+
+.showOverlay {
+    animation: fadeInOverlay 0.15s;
+    opacity: 1;
+    visibility: visible;
+    min-height: calc(100vh - 84px);
+}
+
+@keyframes fadeInOverlay {
+    0% { 
+        opacity:0;
+        min-height: 0vh;
+    }
+    100% {
+        opacity:1;
+        min-height: calc(100vh - 84px);
+    }
+}
+
+@keyframes fadeOutOverlay {
+    0% {
+        opacity:1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
 
 @media screen and (min-width: 375px) {
-    .suggestions__head--mobile { 
+    .suggestions__head {
         background-image: url(../../assets/suggestions/mobile/background-header.png);
         background-repeat: no-repeat;
         background-size: cover;
         padding: 1.5rem;
     }
+
+    /* .suggestions__head--mobile { 
+        background-image: url(../../assets/suggestions/mobile/background-header.png);
+        background-repeat: no-repeat;
+        background-size: cover;
+        padding: 1.5rem;
+    } */
+
+    .suggestions__sort-bar {
+        width: 100%;
+        padding: 0.5rem 1.5rem;
+    }
+
+    .suggestions__sort-bar__num-suggestions {
+        display: none
+    }
+
+    .suggestions__suggested-feedbacks {
+        min-height: calc(100vh - (84px + 55px));
+    }
+
+    .btn--add-feedback {
+        padding: 0.75rem 1.25rem;
+    }
 }
+
