@@ -3,8 +3,10 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon index.js"
   },
   "author": "Christopher Cox",
   "license": "ISC",
@@ -13,6 +15,8 @@
     "cors": "^2.8.5",
     "dotenv": "^14.3.2",
     "express": "^4.17.2",
+    "firebase": "^9.6.5",
+    "mongoose": "^6.2.0",
     "nodemon": "^2.0.15"
   }
 }
