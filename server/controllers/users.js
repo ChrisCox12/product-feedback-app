@@ -28,3 +28,14 @@ export async function createUser(req, res) {
         res.status(404).json({ message: error.message });   
     }
 }
+
+export async function updateUser(req, res) {
+    const userID = req.params.id;
+
+    try {
+
+    } 
+    catch (error) {
+        console.log(error)    
+    }
+}
