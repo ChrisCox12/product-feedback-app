@@ -5,6 +5,7 @@ import mongoose from 'mongoose';
 import 'dotenv/config';
 
 import userRoutes from './routes/users.js';
+import feedbackRoutes from './routes/feedbackRequests.js'; //
 
 const app = express();
 const DB_CONNECTION_STRING = process.env.DB_CONNECTION_STRING;
@@ -16,6 +17,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use('/users', userRoutes);
+app.use('/feedback', feedbackRoutes);
 
 /* app.get('/', (req, res) => {
     res.send('working');

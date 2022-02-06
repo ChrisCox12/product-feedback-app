@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 const feedbackRequestSchema = mongoose.Schema({
     title: String,
     category: String,
-    upvote: Number,
+    upvotes: Number,
     status: String,
     description: String,
     comments: [{

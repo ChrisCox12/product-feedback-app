@@ -22,7 +22,7 @@ export async function createUser(req, res) {
 
         res.status(200).json(newUser);
     }
-    catch (error) {
+    catch(error) {
         console.log(error);
         
         res.status(404).json({ message: error.message });   

@@ -1,15 +1,22 @@
 import React, { useState, useEffect } from 'react';
-import './Suggestions.css';
+import axios from 'axios';
 import hamburger from '../../assets/shared/mobile/icon-hamburger.svg';
 import close from '../../assets/shared/mobile/icon-close.svg';
 import plus from '../../assets/shared/icon-plus.svg';
 import arrowDown from '../../assets/shared/icon-arrow-down.svg';
 import arrowUp from '../../assets/shared/icon-arrow-up.svg';
+import './Suggestions.css';
 
 export default function Suggestions() {
     const [toggle, setToggle] = useState(false);
     const [toggleDrop, setToggleDrop] = useState(false);
     const [sortBy, setSortBy] = useState('sort');
+
+    useEffect(() => {
+        axios.get('http://localhost:5050/feedback')
+            .then(res => console.log(res))
+            .catch(err => console.log(err))
+    }, [])
 
     useEffect(() => {
         const sidebar = document.getElementById('sidebar');

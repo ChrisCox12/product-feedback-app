@@ -1,20 +1,11 @@
-const express = require('express');
+import express from 'express';
+import { getFeedback, createFeedback } from '../controllers/feedbackRequests.js';
+
 const router = express.Router();
 
-router.get('/', (req, res) => {
-    res.send('feedback');
-});
+router.get('/', getFeedback);
+router.post('/', createFeedback);
 
-router.post('/', (req, res) => {
-    res.send('feedback post');
-});
 
-router.delete('/', (req, res) => {
-    res.send('feedback delete');
-});
 
-router.patch('/', (req, res) => {
-    res.send('feedback patch');
-});
-
-module.exports = router;
+export default router;
