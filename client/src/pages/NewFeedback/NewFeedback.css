@@ -1,0 +1,51 @@
+.new-feedback {
+    min-height: 100vh;
+    padding: 3rem 1rem 5rem 1rem;
+}
+
+.new-feddback__back {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 3rem;
+}
+
+.new-feedback__form__plus-icon {
+    width: 4rem;
+    min-height: 4rem;
+    background-color: red;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: url('../../assets/suggestions/tablet/background-header.png')
+}
+
+.new-feedback__form__category {
+    position: relative;
+}
+
+.new-feedback__form__category__dropdown {
+    list-style: none;
+    border-radius: 15px;
+    position: absolute;
+    background-color: var(--white-3);
+    width: 100%;
+}
+
+.new-feedback__form__category__dropdown li {
+    padding: 1rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.new-feedback__form__category__dropdown li:not(:last-child) {
+    border-bottom: 1px solid var(--grey);
+}
+
+.new-feedback__form__category__select {
+    background-color: var(--white-3);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
