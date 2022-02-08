@@ -1,22 +1,40 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import hamburger from '../../assets/shared/mobile/icon-hamburger.svg';
 import close from '../../assets/shared/mobile/icon-close.svg';
 import plus from '../../assets/shared/icon-plus.svg';
 import arrowDown from '../../assets/shared/icon-arrow-down.svg';
 import arrowUp from '../../assets/shared/icon-arrow-up.svg';
+import emptyIllustration from '../../assets/suggestions/illustration-empty.svg';
 import './Suggestions.css';
 
 export default function Suggestions() {
     const [toggle, setToggle] = useState(false);
     const [toggleDrop, setToggleDrop] = useState(false);
     const [sortBy, setSortBy] = useState('sort');
+    const [isNoFeedback, setIsNoFeedback] = useState(false);
+    const [currentUser, setCurrentUser] = useState({ image: '', name: '', username: '' });
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        setCurrentUser({
+            image: "./assets/user-images/image-zena.jpg",
+            name: "Zena Kelley",
+            username: "velvetround"
+        })
+    }, [])
 
     useEffect(() => {
         axios.get('http://localhost:5050/feedback')
-            .then(res => console.log(res))
+            .then(res => {
+                if (res.data.length === 0) {
+                    console.log('no data')
+                    setIsNoFeedback(true);
+                }
+            })
             .catch(err => console.log(err))
-    }, [])
+    }, []);
 
     useEffect(() => {
         const sidebar = document.getElementById('sidebar');
@@ -91,12 +109,22 @@ export default function Suggestions() {
                         <button className='btn--sort-option' onClick={() => setSort('Least Comments')}>Least Comments</button>
                     </div>
                 </div>
-                <button className='btn btn--add-feedback'><span><img src={plus} alt='plus sign' /></span> Add Feedback</button>
+                <button className='btn btn--add-feedback' onClick={() => navigate('/feedback/new')}><span><img src={plus} alt='plus sign' /></span> Add Feedback</button>
             </div>
 
             <div className='suggestions__suggested-feedbacks'>
-                <p>zcvjkfgzldfkvbgzdflkffffffffffffffffff</p>
-                <button className='btn'>Click</button>
+                {isNoFeedback ?
+                    <div className='no-feedback'>
+                        <img src={emptyIllustration} alt='There is no feedback' />
+                        <p>There is no feedback yet.</p>
+                        <p>
+                            Got a suggestion? Found a bug that needs to be squashed? We love hearing about new ideas to improve our app.
+                        </p>
+                        <button className='btn btn--add-feedback' onClick={() => navigate('/feedback/new')}><span><img src={plus} alt='plus sign' /></span> Add Feedback</button>
+                    </div>
+                    :
+                    <p>There is feedback</p>
+                }
             </div>
 
             <div className='suggestions__overlay' id='overlay' onClick={toggleSidebar}></div>

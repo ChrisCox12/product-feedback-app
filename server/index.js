@@ -23,7 +23,9 @@ app.use('/feedback', feedbackRoutes);
     res.send('working');
 }); */
 //sdf
-
+import fs from 'fs';
+import User from './models/user.js';
+import Feedback from './models/feedbackRequest.js';
 
 
 mongoose.connect(DB_CONNECTION_STRING, { useNewUrlParser: true, useUnifiedTopology: true })
@@ -31,6 +33,25 @@ mongoose.connect(DB_CONNECTION_STRING, { useNewUrlParser: true, useUnifiedTopolo
         app.listen(PORT, () => {
             console.log(`listening on port ${PORT}`);
         });
+        /* fs.readFile('requests.json', (err, data) => {
+            if(err) {
+                console.log(err);
+            }
+            else{
+                let d = JSON.parse(data).productRequests;
+                console.log(d);
+
+                try {
+                    d.forEach(item => {
+                        const feed = new Feedback(item);
+                        
+                        feed.save();
+                    })
+                } catch (error) {
+                    console.log(error);
+                }
+            }
+        }) */
     })
     .catch((error) => {
         console.log(error.message);

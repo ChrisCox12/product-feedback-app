@@ -269,6 +269,24 @@
     display: block;
 }
 
+.no-feedback {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--white-1);
+    padding: 0 2rem;
+    min-height: calc(100vh - (84px + 55px) - (1.5rem + 2rem));
+}
+
+.no-feedback > img {
+    margin-bottom: 4rem;
+}
+
+.no-feedback p {
+    margin-bottom: 2rem;
+}
+
 
 
 @media screen and (min-width: 375px) {
@@ -297,6 +315,8 @@
 
     .suggestions__suggested-feedbacks {
         min-height: calc(100vh - (84px + 55px));
+
+        padding: 1.5rem 1rem 2rem 1rem;
     }
 
     .btn--add-feedback {
