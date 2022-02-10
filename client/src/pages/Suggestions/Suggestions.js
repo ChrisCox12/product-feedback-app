@@ -7,7 +7,10 @@ import plus from '../../assets/shared/icon-plus.svg';
 import arrowDown from '../../assets/shared/icon-arrow-down.svg';
 import arrowUp from '../../assets/shared/icon-arrow-up.svg';
 import emptyIllustration from '../../assets/suggestions/illustration-empty.svg';
+import commentBubble from '../../assets/shared/icon-comments.svg';
 import './Suggestions.css';
+
+//import { getAllFeedback } from '../../api';
 
 export default function Suggestions() {
     const [toggle, setToggle] = useState(false);
@@ -15,6 +18,7 @@ export default function Suggestions() {
     const [sortBy, setSortBy] = useState('sort');
     const [isNoFeedback, setIsNoFeedback] = useState(false);
     const [currentUser, setCurrentUser] = useState({ image: '', name: '', username: '' });
+    const [feedback, setFeedback] = useState([]);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -29,8 +33,12 @@ export default function Suggestions() {
         axios.get('http://localhost:5050/feedback')
             .then(res => {
                 if (res.data.length === 0) {
-                    console.log('no data')
+                    //console.log('no data')
                     setIsNoFeedback(true);
+                }
+                else {
+                    //console.log(res.data);
+                    setFeedback(res.data);
                 }
             })
             .catch(err => console.log(err))
@@ -112,7 +120,7 @@ export default function Suggestions() {
                 <button className='btn btn--add-feedback' onClick={() => navigate('/feedback/new')}><span><img src={plus} alt='plus sign' /></span> Add Feedback</button>
             </div>
 
-            <div className='suggestions__suggested-feedbacks'>
+            <div className='suggestions__suggested-feedback'>
                 {isNoFeedback ?
                     <div className='no-feedback'>
                         <img src={emptyIllustration} alt='There is no feedback' />
@@ -123,7 +131,23 @@ export default function Suggestions() {
                         <button className='btn btn--add-feedback' onClick={() => navigate('/feedback/new')}><span><img src={plus} alt='plus sign' /></span> Add Feedback</button>
                     </div>
                     :
-                    <p>There is feedback</p>
+                    feedback.map((item, index) => {
+                        return(
+                            <div className='suggestions__suggested-feedback__feedback' key={index}>
+                                <p className='suggestions__suggested-feedback__feedback__title'>{item.title}</p>
+                                <p className='suggestions__suggested-feedback__feedback__description'>{item.description}</p>
+                                <div className='suggestions__suggested-feedback__feedback__category'>{item.category}</div>
+                                <div className='suggestions__suggested-feedback__feedback__engagements'>
+                                    <button className='btn btn--upvotes'>
+                                        <span><img src={arrowUp} alt='upvotes' /></span> {item.upvotes}
+                                    </button>
+                                    <button className='btn btn--comments'>
+                                        <span><img src={commentBubble} alt='comments' /></span> {item.comments.length}
+                                    </button>
+                                </div>
+                            </div>
+                        )
+                    })
                 }
             </div>
 

@@ -35,6 +35,7 @@ export default function NewFeedback() {
         axios.post('http://localhost:5050/feedback', toSubmit)
             .then(res => {
                 console.log(res)
+                navigate('/');
             })
             .catch(err => console.log(err));
     }
