@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import plus from '../../assets/shared/icon-plus.svg';
 import leftArrow from '../../assets/shared/icon-arrow-left.svg';
 import downArrow from '../../assets/shared/icon-arrow-down.svg';
@@ -8,16 +10,42 @@ import './NewFeedback.css';
 
 export default function NewFeedback() {
     const [toggleDropdown, setToggleDropdown] = useState(false);
+    const [feedbackTitle, setFeedbackTitle] = useState('');
     const [category, setCategory] = useState('Feature');
+    const [feedbackDetail, setFeedbackDetail] = useState('');
+    const navigate = useNavigate();
 
+    function handleTitleChange(e) {
+        setFeedbackTitle(e.target.value);
+    }
+
+    function handleDetailChange(e) {
+        setFeedbackDetail(e.target.value);
+    }
+
+    function handleSubmit(e) {
+        e.preventDefault();
+        
+        const toSubmit = {
+            title: feedbackTitle,
+            category: category,
+            description: feedbackDetail
+        };
+        
+        axios.post('http://localhost:5050/feedback', toSubmit)
+            .then(res => {
+                console.log(res)
+            })
+            .catch(err => console.log(err));
+    }
 
     return (
         <div className='new-feedback'>
-            <div className='new-feddback__back'>
+            <div className='new-feedback__back' onClick={() => navigate('/')}>
                 <img src={leftArrow} alt='back arrow' />
                 <span>Go Back</span>
             </div>
-            <form className='new-feedback__form'>
+            <form className='new-feedback__form' onSubmit={handleSubmit}>
                 <div className='new-feedback__form__plus-icon'>
                     <img src={plus} alt='plus sign' />
                 </div>
@@ -25,7 +53,7 @@ export default function NewFeedback() {
                 <div className='new-feedback__form__title'>
                     <label htmlFor='feedback-title'>Feedback Title</label>
                     <p>Add a short, descriptive headline</p>
-                    <input type='text' id='feedback-title' name='feedback-title' />
+                    <input type='text' id='feedback-title' name='feedback-title' onChange={handleTitleChange} />
                 </div>
                 <div className='new-feedback__form__category'>
                     <div className='new-feedback__form__category__select' onClick={() => setToggleDropdown(!toggleDropdown)}>
@@ -55,20 +83,15 @@ export default function NewFeedback() {
                             </li>
                         </ul>
                     }
-                    {/* <label htmlFor='category'>Category</label>
-                    <p>Choose a category for your feedback</p>
-                    <select id='category' name='category'>
-                        <option>Feature</option>
-                        <option>UI</option>
-                        <option>UX</option>
-                        <option>Enhancement</option>
-                        <option>Bug</option>
-                    </select> */}
                 </div>
                 <div className='new-feedback__form__detail'>
                     <label htmlFor='detail'>Feedback Detail</label>
                     <p>Include any specific comments on what should be improved, added, etc.</p>
-                    <input type='text' name='detail' id='detail' />
+                    <input type='text' name='detail' id='detail' onChange={handleDetailChange} />
+                </div>
+                <div className='new-feedback__form__buttons'>
+                    <input type='submit' value='Add Feedback' className='btn btn--submit' />
+                    <button className='btn btn--cancel' onClick={() => navigate('/')}>Cancel</button>
                 </div>
             </form>
         </div>

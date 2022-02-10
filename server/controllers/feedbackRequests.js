@@ -17,7 +17,7 @@ export async function createFeedback(req, res) {
     const newFeedback = new Feedback(feedback);
 
     try {
-        await newFeedback.save();
+        //await newFeedback.save();
 
         res.status(200).json(newFeedback);
     } 

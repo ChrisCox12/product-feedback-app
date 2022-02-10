@@ -4,8 +4,14 @@ const feedbackRequestSchema = mongoose.Schema({
     id: Number,
     title: String,
     category: String,
-    upvotes: Number,
-    status: String,
+    upvotes: {
+        type: Number, 
+        default: 0
+    },
+    status: {
+        type: String,
+        default: 'suggestion'
+    },
     description: String,
     comments: [{
         id: Number,

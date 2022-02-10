@@ -18,7 +18,7 @@ export async function createUser(req, res) {
     const newUser = new User(user);
 
     try {
-        await newUser.save();
+        //await newUser.save();
 
         res.status(200).json(newUser);
     }

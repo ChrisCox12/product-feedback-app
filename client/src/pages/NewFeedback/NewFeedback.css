@@ -3,11 +3,15 @@
     padding: 3rem 1rem 5rem 1rem;
 }
 
-.new-feddback__back {
+.new-feedback__back {
     display: flex;
     align-items: center;
     gap: 1rem;
     margin-bottom: 3rem;
+}
+
+.new-feedback__back:hover {
+    cursor: pointer;
 }
 
 .new-feedback__form__plus-icon {
@@ -30,6 +34,8 @@
     position: absolute;
     background-color: var(--white-3);
     width: 100%;
+    box-shadow: 0px 5px 20px hsl(225, 18%, 70%);
+    top: 2rem;
 }
 
 .new-feedback__form__category__dropdown li {
@@ -48,4 +54,20 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+
+.new-feedback__form__buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.btn--submit {
+    background-color: var(--purple);
+    color: var(--white-1);
+}
+
+.btn--cancel {
+    background-color: var(--blue-3);
+    color: var(--white-1);
 }
