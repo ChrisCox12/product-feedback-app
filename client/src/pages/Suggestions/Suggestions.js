@@ -10,7 +10,8 @@ import emptyIllustration from '../../assets/suggestions/illustration-empty.svg';
 import commentBubble from '../../assets/shared/icon-comments.svg';
 import './Suggestions.css';
 
-//import { getAllFeedback } from '../../api';
+import FeedbackCard from '../../components/FeedbackCard';
+
 
 export default function Suggestions() {
     const [toggle, setToggle] = useState(false);
@@ -132,7 +133,7 @@ export default function Suggestions() {
                     </div>
                     :
                     feedback.map((item, index) => {
-                        return(
+                        /* return(
                             <div className='suggestions__suggested-feedback__feedback' key={index}>
                                 <p className='suggestions__suggested-feedback__feedback__title'>{item.title}</p>
                                 <p className='suggestions__suggested-feedback__feedback__description'>{item.description}</p>
@@ -146,6 +147,9 @@ export default function Suggestions() {
                                     </button>
                                 </div>
                             </div>
+                        ) */
+                        return(
+                            <FeedbackCard key={index} item={item} index={index} />
                         )
                     })
                 }

@@ -19,6 +19,8 @@ function App() {
           
           <Route path='feedback/new' element={<NewFeedback />} />
 
+          <Route path='feedback/:id' element={<Feedback />} />
+
           <Route path='feedback' element={<Feedback />} />
 
           <Route path='roadmap' element={<Roadmap />} />
