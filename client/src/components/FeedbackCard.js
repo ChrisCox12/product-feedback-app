@@ -34,17 +34,17 @@ export default function FeedbackCard({ item, index }) {
 
   return (
     <div className='suggestions__suggested-feedback__feedback' id={divID} onClick={() => navigate('feedback/'.concat(item._id))}>
-        <p className='suggestions__suggested-feedback__feedback__title'>{title}</p>
-        <p className='suggestions__suggested-feedback__feedback__description'>{description}</p>
-        <div className='suggestions__suggested-feedback__feedback__category'>{category}</div>
-        <div className='suggestions__suggested-feedback__feedback__engagements'>
-            <button className='btn btn--upvotes' onClick={incrementVotes}>
-                <span><img src={arrowUp} alt='upvotes' /></span> {upvotes}
-            </button>
-            <button className='btn btn--comments'>
-                <span><img src={commentBubble} alt='comments' /></span> {item.comments.length}
-            </button>
-        </div>
+      <p className='suggestions__suggested-feedback__feedback__title'>{title}</p>
+      <p className='suggestions__suggested-feedback__feedback__description'>{description}</p>
+      <div className='suggestions__suggested-feedback__feedback__category'>{category}</div>
+      <div className='suggestions__suggested-feedback__feedback__engagements'>
+          <button className='btn btn--upvotes' onClick={incrementVotes}>
+              <span><img src={arrowUp} alt='upvotes' /></span> {upvotes}
+          </button>
+          <button className='btn btn--comments'>
+              <span><img src={commentBubble} alt='comments' /></span> {item.comments.length}
+          </button>
+      </div>
     </div>
   )
 }

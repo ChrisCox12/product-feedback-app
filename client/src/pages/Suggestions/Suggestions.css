@@ -160,9 +160,9 @@
 .suggestions__suggested-feedback__feedback__category {
     border-radius: 7px;
     border-style: none;
-    padding: .5rem 0rem;
+    padding: .5rem 1rem;
     background-color: var(--white-3);
-    width: 30%;
+    width: min-content;
     text-align: center;
     color: var(--blue-2);
     font-weight: bold;
@@ -294,12 +294,14 @@
 }
 
 .btn--upvotes {
-    padding: 0.5rem 0;
-    width: 20%;
+    padding: 0.5rem 1rem;
+    width: min-content;
     display: flex;
     align-items: center;
-    justify-content: space-evenly;
+    /* justify-content: space-evenly; */
+    gap: 1rem;
     font-weight: bold;
+    background-color: var(--white-3);
 }
 
 .btn--upvotes:hover {
