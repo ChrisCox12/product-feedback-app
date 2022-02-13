@@ -39,3 +39,7 @@ export async function createFeedback(req, res) {
         res.status(404).json({ message: error.message });
     }
 }
+
+export async function updateFeedback(req, res) {
+    
+}

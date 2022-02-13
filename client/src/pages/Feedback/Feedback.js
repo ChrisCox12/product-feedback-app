@@ -1,18 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import axios from 'axios';
 import upArrow from '../../assets/shared/icon-arrow-up.svg';
 import leftArrow from '../../assets/shared/icon-arrow-left.svg';
 import commentBubble from '../../assets/shared/icon-comments.svg';
+import Comment from '../../components/Comment';
 import './Feedback.css';
 
 export default function Feedback() {
     const { id } = useParams();
     const navigate= useNavigate();
     const isCreator = false;
-    const [data, setData] = useState({ title: '', category: '', upvotes: 0, description: '', comments: []});
+    const [data, setData] = useState({ title: '', category: '', upvotes: 0, description: '', comments: [] });
     const maxCharacters = 250;
     const [comment, setComment] = useState('');
+    const isSignedIn = useSelector(state => state);
 
     useEffect(() => {
         //console.log(id)
@@ -30,6 +33,13 @@ export default function Feedback() {
 
     }
 
+    function handleFormSubmit(e) {
+        e.preventDefault();
+
+        data.comments.push(comment)
+        console.log(data)
+    }
+
     return (
         <div className='feedback'>
             <div className='feedback__buttons'>
@@ -37,7 +47,7 @@ export default function Feedback() {
                     <img src={leftArrow} alt='back arrow' />
                     <span>Go Back</span>
                 </div>
-                <button className='btn btn--edit' onClick={() => console.log(data)}>Edit Feedback</button>
+                <button className='btn btn--edit' onClick={() => console.log(isSignedIn)}>Edit Feedback</button>
             </div> 
             <div className='feedback__details'>
                 <p className='feedback__details__title'>{data.title}</p>
@@ -55,18 +65,27 @@ export default function Feedback() {
                 </div>
             </div>
 
-            <div className='feedback__comments'></div>
-            
-            <div className='feedback__add-comment'>
-                <form className='comment-form'>
-                    <label htmlFor='comment-input'>Add Comment</label>
-                    <input type='text' onChange={handleFormChange} id='comment-input' name='comment-input' />
-                    <div className='comment-form__bottom'>
-                        <p>{maxCharacters - comment.length} Characters left</p>
-                        <button className='btn btn--post'>Post Comment</button>
-                    </div>
-                </form>
+            <div className='feedback__comments'>
+                <p className='feedback__comments__num-comments'>{data.comments.length} Comment</p>
+                {data.comments.map((comment, index) => {
+                    return <Comment data={comment} key={index} />
+                })}
             </div>
+            
+            {isSignedIn ? 
+                <div className='feedback__add-comment'>
+                    <form className='comment-form' onSubmit={handleFormSubmit}>
+                        <label htmlFor='comment-input'>Add Comment</label>
+                        <input type='text' onChange={handleFormChange} id='comment-input' name='comment-input' />
+                        <div className='comment-form__bottom'>
+                            <p>{maxCharacters - comment.length} Characters left</p>
+                            <input className='btn btn--post' type='submit' value='Post Comment' />
+                        </div>
+                    </form>
+                </div>
+                : 
+                null
+            }
         </div>
     );
 }
