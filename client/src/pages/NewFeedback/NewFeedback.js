@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import axios from 'axios';
 import plus from '../../assets/shared/icon-plus.svg';
 import leftArrow from '../../assets/shared/icon-arrow-left.svg';
@@ -14,6 +15,9 @@ export default function NewFeedback() {
     const [category, setCategory] = useState('Feature');
     const [feedbackDetail, setFeedbackDetail] = useState('');
     const navigate = useNavigate();
+    const user = useSelector(state => state.user);
+
+    //useEffect(() => console.log(user), [])
 
     function handleTitleChange(e) {
         setFeedbackTitle(e.target.value);
@@ -29,7 +33,8 @@ export default function NewFeedback() {
         const toSubmit = {
             title: feedbackTitle,
             category: category,
-            description: feedbackDetail
+            description: feedbackDetail,
+            creatorID: user.userID
         };
         
         axios.post('http://localhost:5050/feedback', toSubmit)

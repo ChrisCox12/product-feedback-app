@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 
-const feedbackRequestSchema = mongoose.Schema({
-    id: Number,
+const feedbackSchema = mongoose.Schema({
+    creatorID: mongoose.SchemaTypes.ObjectId,
     title: String,
     category: String,
     upvotes: {
@@ -14,16 +14,16 @@ const feedbackRequestSchema = mongoose.Schema({
     },
     description: String,
     comments: [{
-        id: Number,
         content: String,
-        user: { 
+        creator: { 
             image: String,
             name: String,
-            username: String
+            username: String,
+            creatorID: mongoose.SchemaTypes.ObjectId
         }
     }]
 });
 
-const Feedback = mongoose.model('Feedback', feedbackRequestSchema);
+const Feedback = mongoose.model('Feedback', feedbackSchema);
 
 export default Feedback;

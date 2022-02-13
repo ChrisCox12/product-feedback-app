@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
 import upArrow from '../../assets/shared/icon-arrow-up.svg';
 import leftArrow from '../../assets/shared/icon-arrow-left.svg';
 import commentBubble from '../../assets/shared/icon-comments.svg';
 import Comment from '../../components/Comment';
 import './Feedback.css';
+import { signIn } from '../../actions';
 
 export default function Feedback() {
     const { id } = useParams();
@@ -15,7 +16,9 @@ export default function Feedback() {
     const [data, setData] = useState({ title: '', category: '', upvotes: 0, description: '', comments: [] });
     const maxCharacters = 250;
     const [comment, setComment] = useState('');
-    const isSignedIn = useSelector(state => state);
+    const isSignedIn = useSelector(state => state.isLogged);
+    const user = useSelector(state => state.user);
+    const dispatch = useDispatch();
 
     useEffect(() => {
         //console.log(id)
@@ -47,7 +50,9 @@ export default function Feedback() {
                     <img src={leftArrow} alt='back arrow' />
                     <span>Go Back</span>
                 </div>
-                <button className='btn btn--edit' onClick={() => console.log(isSignedIn)}>Edit Feedback</button>
+                {user.userID === data.creatorID &&
+                    <button className='btn btn--edit' onClick={() => console.log('edit')}>Edit Feedback</button>
+                }
             </div> 
             <div className='feedback__details'>
                 <p className='feedback__details__title'>{data.title}</p>
@@ -66,7 +71,7 @@ export default function Feedback() {
             </div>
 
             <div className='feedback__comments'>
-                <p className='feedback__comments__num-comments'>{data.comments.length} Comment</p>
+                <p className='feedback__comments__num-comments'>{data.comments.length} Comment(s)</p>
                 {data.comments.map((comment, index) => {
                     return <Comment data={comment} key={index} />
                 })}

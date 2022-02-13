@@ -12,6 +12,9 @@ import './Suggestions.css';
 
 import FeedbackCard from '../../components/FeedbackCard';
 
+import { useDispatch, useSelector } from 'react-redux';
+import { signIn, setUser } from '../../actions';
+
 
 export default function Suggestions() {
     const [toggle, setToggle] = useState(false);
@@ -21,12 +24,15 @@ export default function Suggestions() {
     const [currentUser, setCurrentUser] = useState({ image: '', name: '', username: '' });
     const [feedback, setFeedback] = useState([]);
     const navigate = useNavigate();
+    const dispatch = useDispatch();
+    //const nm = useSelector(state => state.user.name)
 
     useEffect(() => {
         setCurrentUser({
             image: "./assets/user-images/image-zena.jpg",
             name: "Zena Kelley",
-            username: "velvetround"
+            username: "velvetround",
+            userID: '6201be50e0963bb111eed761'
         })
     }, [])
 
@@ -81,6 +87,11 @@ export default function Suggestions() {
 
     function setSort(sortBy) {
         setSortBy(sortBy);
+    }
+
+    function signAndSet() {
+        dispatch(signIn());
+        dispatch(setUser(currentUser));
     }
 
 
@@ -182,6 +193,9 @@ export default function Suggestions() {
                     </div>
                 </div>
             </div>
+
+            <button onClick={signAndSet}>Sign In</button>
+            {/* <button onClick={() => console.log(nm)}>Click</button> */}
         </div>
         
     );
