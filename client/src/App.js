@@ -15,7 +15,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Suggestions />} />
 
-          <Route path='feedback/edit' element={<EditFeedback />} />
+          <Route path='feedback/edit/:id' element={<EditFeedback />} />
           
           <Route path='feedback/new' element={<NewFeedback />} />
 

@@ -51,9 +51,13 @@ export default function Feedback() {
                     <span>Go Back</span>
                 </div>
                 {user.userID === data.creatorID &&
-                    <button className='btn btn--edit' onClick={() => console.log('edit')}>Edit Feedback</button>
+                    <button 
+                        className='btn btn--edit' 
+                        onClick={() => navigate('feedback/edit/'.concat(id))}
+                    >Edit Feedback</button>
                 }
-            </div> 
+            </div>
+
             <div className='feedback__details'>
                 <p className='feedback__details__title'>{data.title}</p>
                 <p className='feedback__details__description'>{data.description}</p>
@@ -73,7 +77,7 @@ export default function Feedback() {
             <div className='feedback__comments'>
                 <p className='feedback__comments__num-comments'>{data.comments.length} Comment(s)</p>
                 {data.comments.map((comment, index) => {
-                    return <Comment data={comment} key={index} />
+                    return ( <Comment data={comment} key={index} /> );
                 })}
             </div>
             
@@ -81,10 +85,19 @@ export default function Feedback() {
                 <div className='feedback__add-comment'>
                     <form className='comment-form' onSubmit={handleFormSubmit}>
                         <label htmlFor='comment-input'>Add Comment</label>
-                        <input type='text' onChange={handleFormChange} id='comment-input' name='comment-input' />
+                        <input 
+                            type='text' 
+                            onChange={handleFormChange} 
+                            id='comment-input' 
+                            name='comment-input' 
+                        />
                         <div className='comment-form__bottom'>
                             <p>{maxCharacters - comment.length} Characters left</p>
-                            <input className='btn btn--post' type='submit' value='Post Comment' />
+                            <input 
+                                type='submit'
+                                className='btn btn--post'
+                                value='Post Comment' 
+                            />
                         </div>
                     </form>
                 </div>

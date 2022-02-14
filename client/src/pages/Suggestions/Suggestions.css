@@ -333,7 +333,7 @@
 }
 
 .showDropdown {
-    display: block;
+    display: flex;
 }
 
 .no-feedback {

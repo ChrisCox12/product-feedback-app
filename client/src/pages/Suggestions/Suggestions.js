@@ -116,7 +116,7 @@ export default function Suggestions() {
                 <div className='suggestions__sort-bar__num-suggestions'>6 suggestions</div>
                 <div className='suggestions__sort-bar__dropdown'>
                     <div className='suggestions__sort-bar__dropdown__sort-by' onClick={toggleDropDown}>
-                        Sort by :
+                        Sort by:{' '}
                             <span>
                                 {sortBy} { toggleDrop ? <img src={arrowUp} alt='up arrow' /> : <img src={arrowDown} alt='down arrow' /> }
                             </span>
@@ -129,7 +129,9 @@ export default function Suggestions() {
                         <button className='btn--sort-option' onClick={() => setSort('Least Comments')}>Least Comments</button>
                     </div>
                 </div>
-                <button className='btn btn--add-feedback' onClick={() => navigate('/feedback/new')}><span><img src={plus} alt='plus sign' /></span> Add Feedback</button>
+                <button className='btn btn--add-feedback' onClick={() => navigate('/feedback/new')}>
+                    <span><img src={plus} alt='plus sign' /></span> Add Feedback
+                </button>
             </div>
 
             <div className='suggestions__suggested-feedback'>
@@ -140,7 +142,9 @@ export default function Suggestions() {
                         <p>
                             Got a suggestion? Found a bug that needs to be squashed? We love hearing about new ideas to improve our app.
                         </p>
-                        <button className='btn btn--add-feedback' onClick={() => navigate('/feedback/new')}><span><img src={plus} alt='plus sign' /></span> Add Feedback</button>
+                        <button className='btn btn--add-feedback' onClick={() => navigate('/feedback/new')}>
+                            <span><img src={plus} alt='plus sign' /></span> Add Feedback
+                        </button>
                     </div>
                     :
                     feedback.map((item, index) => {
@@ -159,9 +163,7 @@ export default function Suggestions() {
                                 </div>
                             </div>
                         ) */
-                        return(
-                            <FeedbackCard key={index} item={item} index={index} />
-                        )
+                        return ( <FeedbackCard key={index} item={item} index={index} /> );
                     })
                 }
             </div>
