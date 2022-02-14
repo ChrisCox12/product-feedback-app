@@ -1,5 +1,10 @@
 import Feedback from '../models/feedbackRequest.js';
 
+
+/*////////////////////////////
+/////       GET         /////
+//////////////////////////*/
+
 export async function getAllFeedback(req, res) {
     try {
         const feedback = await Feedback.find();
@@ -24,6 +29,10 @@ export async function getFeedback(req, res) {
     }
 }
 
+/*////////////////////////////
+/////       POST        /////
+//////////////////////////*/
+
 export async function createFeedback(req, res) {
     const feedback = req.body;
     const newFeedback = new Feedback(feedback);
@@ -39,6 +48,10 @@ export async function createFeedback(req, res) {
         res.status(404).json({ message: error.message });
     }
 }
+
+/*////////////////////////////
+/////       PATCH       /////
+///////////////////////////*/
 
 export async function updateFeedback(req, res) {
     

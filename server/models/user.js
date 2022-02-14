@@ -3,7 +3,8 @@ import mongoose from 'mongoose';
 const userSchema = mongoose.Schema({
     name: String,
     username: String,
-    image: String
+    image: String,
+    upvotedPosts: [mongoose.SchemaTypes.ObjectId]
 });
 
 const User = mongoose.model('User', userSchema);

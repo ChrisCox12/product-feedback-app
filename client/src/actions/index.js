@@ -4,14 +4,33 @@ export function signIn() {
     }
 }
 
-export function setUser({ username, name, image, userID }) {
+export function setUser({ username, name, image, _id, upvotedPosts }) {
     return {
         type: 'SET_USER',
         payload: {
             username, 
             name,
             image, 
-            userID
+            _id,
+            upvotedPosts
+        }
+    }
+}
+
+export function addUpvotedPost(postID) {
+    return {
+        type: 'ADD_UPVOTED_POST',
+        payload: {
+            postID: postID
+        }
+    }
+}
+
+export function removeUpvotedPost(postID) {
+    return {
+        type: 'REMOVE_UPVOTED_POST',
+        payload: {
+            postID: postID
         }
     }
 }

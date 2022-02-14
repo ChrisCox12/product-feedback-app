@@ -6,6 +6,7 @@ import close from '../../assets/shared/mobile/icon-close.svg';
 import plus from '../../assets/shared/icon-plus.svg';
 import arrowDown from '../../assets/shared/icon-arrow-down.svg';
 import arrowUp from '../../assets/shared/icon-arrow-up.svg';
+import arrowUpWhite from '../../assets/shared/icon-arrow-up-white.svg';
 import emptyIllustration from '../../assets/suggestions/illustration-empty.svg';
 import commentBubble from '../../assets/shared/icon-comments.svg';
 import './Suggestions.css';
@@ -27,14 +28,14 @@ export default function Suggestions() {
     const dispatch = useDispatch();
     //const nm = useSelector(state => state.user.name)
 
-    useEffect(() => {
+    /* useEffect(() => {
         setCurrentUser({
             image: "./assets/user-images/image-zena.jpg",
             name: "Zena Kelley",
             username: "velvetround",
             userID: '6201be50e0963bb111eed761'
         })
-    }, [])
+    }, []) */
 
     useEffect(() => {
         axios.get('http://localhost:5050/feedback')
@@ -90,8 +91,15 @@ export default function Suggestions() {
     }
 
     function signAndSet() {
-        dispatch(signIn());
-        dispatch(setUser(currentUser));
+        axios.get('http://localhost:5050/users/'.concat('6201be50e0963bb111eed761'))
+            .then(res => {
+                //console.log(res.data)
+                dispatch(signIn());
+                dispatch(setUser(res.data))
+            })
+            .catch(err => console.log(err))
+        //dispatch(signIn());
+        //dispatch(setUser(currentUser));
     }
 
 

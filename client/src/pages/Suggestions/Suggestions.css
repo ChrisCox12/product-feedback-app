@@ -317,7 +317,10 @@
     background: transparent;
 }
 
-
+.upvoted {
+    background-color: var(--blue-2);
+    color: var(--white-1);
+}
 
 .selected { 
     color: var(--white-1);

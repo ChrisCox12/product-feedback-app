@@ -10,7 +10,9 @@ const router = express.Router();
 
 router.get('/', getAllFeedback);
 router.get('/:id', getFeedback);
+
 router.post('/', createFeedback);
+
 router.patch('/:id', updateFeedback);
 
 
