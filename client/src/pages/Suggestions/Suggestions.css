@@ -251,14 +251,9 @@
     color: var(--blue-1);
 }
 
-.btn { 
-    border-radius: 7px;
-    border-style: none; 
-}
 
-.btn:hover { 
-    cursor: pointer;
-}
+
+
 
 .btn--suggestion-selector {
     background-color: var(--white-3);

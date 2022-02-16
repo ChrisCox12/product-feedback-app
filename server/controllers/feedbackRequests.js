@@ -54,5 +54,14 @@ export async function createFeedback(req, res) {
 ///////////////////////////*/
 
 export async function updateFeedback(req, res) {
-    
+    const update = req.body;
+    const { id } = req.params;
+
+    try {
+        await Feedback.findByIdAndUpdate(id, update);
+
+        res.status(200).json(update);
+    } catch (error) {
+        res.status(404).json({ message: error.message })
+    }
 }

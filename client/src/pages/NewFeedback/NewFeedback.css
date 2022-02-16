@@ -1,6 +1,6 @@
 .new-feedback {
     min-height: 100vh;
-    padding: 3rem 1rem 5rem 1rem;
+    background-color: var(--white-3);
 }
 
 .new-feedback__back {
@@ -14,14 +14,17 @@
     cursor: pointer;
 }
 
-.new-feedback__form__plus-icon {
-    width: 4rem;
-    min-height: 4rem;
-    background-color: red;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: url('../../assets/suggestions/tablet/background-header.png')
+.new-feedback__form-wrapper {
+    background-color: var(--white-1);
+    position: relative;
+    border-radius: 10px;
+}
+
+.new-feedback__form-wrapper__img {
+    position: absolute;
+    top: 0;
+    left: 2rem;
+    transform: translateY(-50%);
 }
 
 .new-feedback__form__category {
@@ -29,13 +32,9 @@
 }
 
 .new-feedback__form__category__dropdown {
-    list-style: none;
     border-radius: 15px;
     position: absolute;
-    background-color: var(--white-3);
     width: 100%;
-    box-shadow: 0px 5px 20px hsl(225, 18%, 70%);
-    top: 2rem;
 }
 
 .new-feedback__form__category__dropdown li {
@@ -54,20 +53,59 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    border-radius: 5px;
 }
 
 .new-feedback__form__buttons {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
 }
 
-.btn--submit {
-    background-color: var(--purple);
-    color: var(--white-1);
+.new-feedback__back,
+.new-feedback__form__form-header,
+.new-feedback__form__title__header,
+.new-feedback__form__detail__header,
+.new-feedback__form__category__header {
+    font-weight: bold;
 }
 
-.btn--cancel {
-    background-color: var(--blue-3);
-    color: var(--white-1);
+
+@media screen and (min-width: 375px) {
+    .new-feedback {
+        padding: 3rem 1.5rem 0rem 1.5rem;
+    }
+
+    .new-feedback__form-wrapper {
+        padding: 3.5rem 1.5rem 0rem 1.55rem;
+    }
+
+    .new-feedback__form__form-header {
+        margin-bottom: 2rem;
+    }
+
+    .new-feedback__form__category__select {
+        padding: 1rem;
+    }
+
+    .new-feedback__form__category__dropdown {
+        top: 8rem;
+    }
+
+    .new-feedback__form__title,
+    .new-feedback__form__category,
+    .new-feedback__form__detail {
+        margin-bottom: 1.5rem;
+    }
+
+    .new-feedback__form__title__header,
+    .new-feedback__form__detail__header,
+    .new-feedback__form__category__header {
+        margin-bottom: 0.5rem;
+    }
+
+    .new-feedback__form__title__sub,
+    .new-feedback__form__detail__sub,
+    .new-feedback__form__category__sub {
+        margin-bottom: 1.25rem;
+    }
 }

@@ -7,6 +7,7 @@ import leftArrow from '../../assets/shared/icon-arrow-left.svg';
 import commentBubble from '../../assets/shared/icon-comments.svg';
 import Comment from '../../components/Comment';
 import './Feedback.css';
+import '../SharedStyles/styles.css';
 import { signIn } from '../../actions';
 
 export default function Feedback() {
@@ -31,7 +32,7 @@ export default function Feedback() {
     }, [id]);
 
     function handleFormChange(e) {
-        console.log(e.target.value)
+        //console.log(e.target.value)
         setComment(e.target.value)
 
     }
@@ -40,7 +41,7 @@ export default function Feedback() {
         e.preventDefault();
 
         data.comments.push(comment)
-        console.log(data)
+        //console.log(data)
     }
 
     return (
@@ -53,7 +54,7 @@ export default function Feedback() {
                 {user.userID === data.creatorID &&
                     <button 
                         className='btn btn--edit' 
-                        onClick={() => navigate('feedback/edit/'.concat(id))}
+                        onClick={() => navigate('/feedback/edit/'.concat(id))}
                     >Edit Feedback</button>
                 }
             </div>

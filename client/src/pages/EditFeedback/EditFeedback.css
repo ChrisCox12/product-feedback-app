@@ -1,0 +1,160 @@
+.edit-feedback {
+    min-height: 100vh;
+    background-color: var(--white-3);
+}
+
+.edit-feedback__back {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.edit-feedback__form-wrapper {
+    position: relative;
+    background-color: var(--white-1);
+    border-radius: 10px;
+}
+
+.edit-feedback__form-wrapper__img {
+    position: absolute;
+    top: 0;
+    left: 2rem;
+    transform: translateY(-50%);
+}
+
+
+
+.edit-feedback__form__buttons {
+    display: flex;
+}
+
+.edit-feedback__form__buttons > div {
+    display: flex;
+}
+
+.edit-feedback__form__category,
+.edit-feedback__form__status {
+    position: relative;
+}
+
+.edit-feedback__form__category__dropdown,
+.edit-feedback__form__status__dropdown {
+    position: absolute;
+    left: 0;
+    top: 8rem;
+    background-color: var(--white-1);
+    box-shadow: 0px 5px 20px hsl(225, 18%, 70%);
+    border-radius: 15px;
+    width: 100%;
+    z-index: 100;
+}
+
+.edit-feedback__form__category__dropdown li,
+.edit-feedback__form__status__dropdown li {
+    padding: 1rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.edit-feedback__form__category__dropdown li:not(:last-child),
+.edit-feedback__form__status__dropdown li:not(:last-child) {
+    border-bottom: 1px solid var(--grey);
+}
+
+
+.edit-feedback__form__category__select,
+.edit-feedback__form__status__select {
+    border-style: none;
+    background-color: var(--white-3);
+    width: 100%;
+    padding: 1rem;
+    border-radius: 5px;
+}
+
+.edit-feedback__form__category__select:hover,
+.edit-feedback__form__status__select:hover {
+    cursor: pointer;
+}
+
+.edit-feedback__form__category__select,
+.edit-feedback__form__status__select {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.edit-feedback__back,
+.edit-feedback__form-wrapper__header,
+.edit-feedback__form__category__header,
+.edit-feedback__form__status__header,
+.edit-feedback__form__title__label,
+.edit-feedback__form__detail__label {
+    font-weight: bold;
+}
+
+.btn--delete {
+    background-color: var(--red);
+    color: var(--white-1);
+    padding: 1rem 0;
+    width: 100%;
+}
+
+
+
+
+
+
+
+@media screen and (min-width: 375px) {
+    .edit-feedback {
+        padding: 3rem 1.5rem 4rem 1.5rem;
+    }
+
+    .edit-feedback__back {
+        margin-bottom: 3.5rem;
+    }
+
+    .edit-feedback__form-wrapper {
+        padding: 3.5rem 1rem 1rem 1rem;
+    }
+
+    .edit-feedback__form-wrapper__header {
+        margin-bottom: 2rem;
+    }
+
+    .edit-feedback__form__category__header,
+    .edit-feedback__form__status__header,
+    .edit-feedback__form__title__label,
+    .edit-feedback__form__detail__label {
+        margin-bottom: 0.25rem;
+    }
+
+    .edit-feedback__form__title__sub,
+    .edit-feedback__form__category__sub,
+    .edit-feedback__form__status__sub,
+    .edit-feedback__form__detail__sub {
+        margin-bottom: 1.25rem;
+    }
+
+    .edit-feedback__form__title,
+    .edit-feedback__form__category,
+    .edit-feedback__form__status,
+    .edit-feedback__form__detail {
+        margin-bottom: 1.5rem;
+    }
+
+    .edit-feedback__form__buttons {
+        flex-direction: column-reverse;
+    }
+
+    .edit-feedback__form__buttons > div {
+        flex-direction: column-reverse;
+    }
+
+    .btn--cancel,
+    .btn--save,
+    .btn--delete {
+        margin-bottom: 1rem;
+    }
+}

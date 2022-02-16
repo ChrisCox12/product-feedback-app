@@ -10,6 +10,7 @@ import arrowUpWhite from '../../assets/shared/icon-arrow-up-white.svg';
 import emptyIllustration from '../../assets/suggestions/illustration-empty.svg';
 import commentBubble from '../../assets/shared/icon-comments.svg';
 import './Suggestions.css';
+import '../SharedStyles/styles.css';
 
 import FeedbackCard from '../../components/FeedbackCard';
 
@@ -95,11 +96,9 @@ export default function Suggestions() {
             .then(res => {
                 //console.log(res.data)
                 dispatch(signIn());
-                dispatch(setUser(res.data))
+                dispatch(setUser(res.data));
             })
-            .catch(err => console.log(err))
-        //dispatch(signIn());
-        //dispatch(setUser(currentUser));
+            .catch(err => console.log(err));
     }
 
 

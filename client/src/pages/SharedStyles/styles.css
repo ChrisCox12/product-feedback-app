@@ -1,0 +1,50 @@
+.btn { 
+    border-radius: 7px;
+    border-style: none;
+    font-weight: bold;
+}
+
+.btn:hover { 
+    cursor: pointer;
+}
+
+.btn--cancel {
+    padding: 1rem 0;
+    width: 100%;
+    background-color: var(--blue-3);
+    color: var(--white-1);
+}
+
+.btn--save {
+    background-color: var(--purple);
+    color: var(--white-1);
+    padding: 1rem 0;
+}
+
+label { 
+    display: block;
+}
+
+ul {
+    list-style: none;
+    box-shadow: 0px 5px 20px hsl(225, 18%, 70%);
+    background-color: var(--white-3);
+}
+
+li:hover {
+    cursor: pointer;
+    color: var(--purple);
+}
+
+input {
+    width: 100%;
+}
+
+input[name='feedback-title'],
+input[name='feedback-description'] {
+    border-style: none;
+    background-color: var(--white-3);
+    width: 100%;
+    padding: 1rem;
+    border-radius: 5px;
+}
