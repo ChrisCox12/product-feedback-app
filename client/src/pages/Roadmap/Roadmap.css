@@ -1,0 +1,39 @@
+.roadmap {
+    overflow-x: hidden;
+}
+
+.roadmap__content__planned {
+    background-color: blue;
+    width: 100%;
+    min-height: 100vh;
+}
+
+.roadmap__content__in-progress {
+    background-color: red;
+    width: 100%;
+    min-height: 100vh;
+}
+
+.roadmap__content__live {
+    background-color: green;
+    width: 100%;
+    min-height: 100vh;
+}
+
+.roadmap__content {
+    display: grid;
+    grid-template-columns: repeat(3, 100%);
+    /* transform: translateX(0%); */
+    transform: translateX(-100%);
+    transition-property: all;
+    transition-duration: 0.25s;
+    transition-timing-function: ease-in-out;
+}
+
+.showPlanned {
+    transform: translateX(0%);
+}
+
+.showLive {
+    transform: translateX(-200%);
+}

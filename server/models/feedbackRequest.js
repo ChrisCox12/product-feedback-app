@@ -10,7 +10,7 @@ const feedbackSchema = mongoose.Schema({
     },
     status: {
         type: String,
-        default: 'suggestion'
+        default: 'Suggestion'
     },
     description: String,
     comments: [{
