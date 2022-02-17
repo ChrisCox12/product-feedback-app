@@ -2,20 +2,40 @@
     overflow-x: hidden;
 }
 
+.roadmap__head {
+    background-color: var(--blue-4);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.roadmap__head__title {
+    color: var(--white-1);
+    font-weight: bold;
+}
+
+.roadmap__statuses {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.roadmap__content__in-progress,
+.roadmap__content__live,
 .roadmap__content__planned {
-    background-color: blue;
+    background-color: var(--white-3);
+}
+
+.roadmap__content__planned {
     width: 100%;
     min-height: 100vh;
 }
 
 .roadmap__content__in-progress {
-    background-color: red;
     width: 100%;
     min-height: 100vh;
 }
 
 .roadmap__content__live {
-    background-color: green;
     width: 100%;
     min-height: 100vh;
 }
@@ -30,10 +50,68 @@
     transition-timing-function: ease-in-out;
 }
 
+
+.roadmap__content__planned__title,
+.roadmap__content__in-progress__title,
+.roadmap__content__live__title {
+    font-weight: bold;
+}
+
 .showPlanned {
     transform: translateX(0%);
 }
 
 .showLive {
     transform: translateX(-200%);
+}
+
+.btn--back {
+    background-color: transparent;
+    color: var(--white-1);
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.btn--status {
+    border-radius: 0;
+    background-color: var(--white-3);
+    color: hsl(224, 20%, 49%, 60%);
+}
+
+.status-selected {
+    border-bottom: 3px solid var(--purple);
+    color: var(--blue-4);
+}
+
+@media screen and (min-width: 375px) {
+    .roadmap__head {
+        padding: 1.5rem;
+    }
+
+    .roadmap__statuses {
+        border-bottom: 1px solid var(--grey);
+    }
+
+    .roadmap__content__in-progress,
+    .roadmap__content__live,
+    .roadmap__content__planned {
+        padding: 2rem 1.5rem 0 1.5rem;
+    }
+
+    .roadmap__content__planned__title,
+    .roadmap__content__in-progress__title,
+    .roadmap__content__live__title {
+        margin-bottom: 0.75rem
+    }
+
+    .roadmap__content__planned__sub,
+    .roadmap__content__in-progress__sub,
+    .roadmap__content__live__sub {
+        margin-bottom: 2rem
+    }
+
+    .btn--status {
+        padding: 1.5rem 1rem;
+    }
 }

@@ -27,6 +27,35 @@
     padding: 1rem 0;
 }
 
+.btn--upvotes {
+    padding: 0.5rem 1rem;
+    width: min-content;
+    display: flex;
+    align-items: center;
+    /* justify-content: space-evenly; */
+    gap: 1rem;
+    font-weight: bold;
+    background-color: var(--white-3);
+}
+
+.btn--upvotes:hover {
+    background-color: var(--blue-5);
+}
+
+.btn--comments {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    width: 15%;
+    font-weight: bold;
+    background: transparent;
+}
+
+.upvoted {
+    background-color: var(--blue-2);
+    color: var(--white-1);
+}
+
 label { 
     display: block;
 }

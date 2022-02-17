@@ -6,6 +6,8 @@ import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { addUpvotedPost, removeUpvotedPost } from '../actions';
 import axios from 'axios';
+import './FeedbackCard.css';
+import '../pages/SharedStyles/styles.css';
 
 
 export default function FeedbackCard({ item, index }) {
@@ -45,15 +47,15 @@ export default function FeedbackCard({ item, index }) {
     if(!isUpvoted) {
       dispatch(addUpvotedPost(_id));
       newUpvotes = newUpvotes + 1;
-      setUpvotes(newUpvotes);
       setIsUpvoted(true);
     }
     else {
       dispatch(removeUpvotedPost(_id));
       newUpvotes = newUpvotes - 1;
-      setUpvotes(newUpvotes);
       setIsUpvoted(false);
     }
+
+    setUpvotes(newUpvotes);
     
     axios.patch('http://localhost:5050/feedback/'.concat(_id), { upvotes: newUpvotes })
         .then(res => console.log(res))
@@ -65,12 +67,9 @@ export default function FeedbackCard({ item, index }) {
     <div className='suggestions__suggested-feedback__feedback' id={divID}>
       <p 
         className='suggestions__suggested-feedback__feedback__title' 
-        onClick={() => navigate('feedback/'.concat(_id))}
+        onClick={() => navigate('/feedback/'.concat(_id))}
       >{title}</p>
-      <p 
-        className='suggestions__suggested-feedback__feedback__description' 
-        onClick={() => navigate('feedback/'.concat(_id))}
-      >{description}</p>
+      <p className='suggestions__suggested-feedback__feedback__description'>{description}</p>
       <div className='suggestions__suggested-feedback__feedback__category'>{category}</div>
       <div className='suggestions__suggested-feedback__feedback__engagements'>
           <button className='btn btn--upvotes' onClick={vote}>
@@ -79,8 +78,9 @@ export default function FeedbackCard({ item, index }) {
               </span> 
               {upvotes}
           </button>
-          <button className='btn btn--comments' onClick={() => navigate('feedback/'.concat(_id))}>
-              <span><img src={commentBubble} alt='comments' /></span> {item.comments.length}
+          <button className='btn btn--comments' onClick={() => navigate('/feedback/'.concat(_id))}>
+              <span><img src={commentBubble} alt='comments' /></span> 
+              {item.comments.length}
           </button>
       </div>
     </div>
