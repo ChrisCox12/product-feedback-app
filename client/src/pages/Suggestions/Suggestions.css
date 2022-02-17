@@ -269,11 +269,7 @@
     text-decoration: underline;
 }
 
-.btn--add-feedback {
-    background-color: var(--purple);
-    color: var(--white-1);
-    border-radius: 10px;
-}
+
 
 .btn--sort-option {
     border: none;

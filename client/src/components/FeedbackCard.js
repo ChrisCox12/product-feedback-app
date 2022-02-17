@@ -5,6 +5,7 @@ import commentBubble from '../assets/shared/icon-comments.svg';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { addUpvotedPost, removeUpvotedPost } from '../actions';
+import axios from 'axios';
 
 
 export default function FeedbackCard({ item, index }) {
@@ -16,11 +17,11 @@ export default function FeedbackCard({ item, index }) {
   const _id = item._id || '';
   const [isUpvoted, setIsUpvoted] = useState(false);
   const divID = 'feedback'.concat(index);
-  const isUp = useSelector(state => state.user.upvotedPosts.includes(_id));
+  const prevUpvoted = useSelector(state => state.user.upvotedPosts.includes(_id));
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if(isUp) {
+    if(prevUpvoted) {
       setIsUpvoted(true);
     }
   }, []);
@@ -39,16 +40,24 @@ export default function FeedbackCard({ item, index }) {
 
 
   function vote() {
+    let newUpvotes = upvotes;
+
     if(!isUpvoted) {
       dispatch(addUpvotedPost(_id));
-      setUpvotes(upvotes + 1);
+      newUpvotes = newUpvotes + 1;
+      setUpvotes(newUpvotes);
       setIsUpvoted(true);
     }
     else {
       dispatch(removeUpvotedPost(_id));
-      setUpvotes(upvotes - 1);
+      newUpvotes = newUpvotes - 1;
+      setUpvotes(newUpvotes);
       setIsUpvoted(false);
     }
+    
+    axios.patch('http://localhost:5050/feedback/'.concat(_id), { upvotes: newUpvotes })
+        .then(res => console.log(res))
+        .catch(err => console.log(err));
   }
 
 
@@ -56,11 +65,11 @@ export default function FeedbackCard({ item, index }) {
     <div className='suggestions__suggested-feedback__feedback' id={divID}>
       <p 
         className='suggestions__suggested-feedback__feedback__title' 
-        onClick={() => navigate('feedback/'.concat(item._id))}
+        onClick={() => navigate('feedback/'.concat(_id))}
       >{title}</p>
       <p 
         className='suggestions__suggested-feedback__feedback__description' 
-        onClick={() => navigate('feedback/'.concat(item._id))}
+        onClick={() => navigate('feedback/'.concat(_id))}
       >{description}</p>
       <div className='suggestions__suggested-feedback__feedback__category'>{category}</div>
       <div className='suggestions__suggested-feedback__feedback__engagements'>
@@ -70,7 +79,7 @@ export default function FeedbackCard({ item, index }) {
               </span> 
               {upvotes}
           </button>
-          <button className='btn btn--comments' onClick={() => navigate('feedback/'.concat(item._id))}>
+          <button className='btn btn--comments' onClick={() => navigate('feedback/'.concat(_id))}>
               <span><img src={commentBubble} alt='comments' /></span> {item.comments.length}
           </button>
       </div>

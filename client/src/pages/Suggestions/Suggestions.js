@@ -155,21 +155,6 @@ export default function Suggestions() {
                     </div>
                     :
                     feedback.map((item, index) => {
-                        /* return(
-                            <div className='suggestions__suggested-feedback__feedback' key={index}>
-                                <p className='suggestions__suggested-feedback__feedback__title'>{item.title}</p>
-                                <p className='suggestions__suggested-feedback__feedback__description'>{item.description}</p>
-                                <div className='suggestions__suggested-feedback__feedback__category'>{item.category}</div>
-                                <div className='suggestions__suggested-feedback__feedback__engagements'>
-                                    <button className='btn btn--upvotes'>
-                                        <span><img src={arrowUp} alt='upvotes' /></span> {item.upvotes}
-                                    </button>
-                                    <button className='btn btn--comments'>
-                                        <span><img src={commentBubble} alt='comments' /></span> {item.comments.length}
-                                    </button>
-                                </div>
-                            </div>
-                        ) */
                         return ( <FeedbackCard key={index} item={item} index={index} /> );
                     })
                 }
@@ -190,7 +175,7 @@ export default function Suggestions() {
                 <div className='suggestions__sidebar__roadmap-stats'>
                     <div className='suggestions__sidebar__roadmap-stats__header'>
                         <p className='suggestions__sidebar__roadmap-stats__header__title'>Roadmap</p>
-                        <button className='btn btn--view'>View</button>
+                        <button className='btn btn--view' onClick={() => navigate('/roadmap')}>View</button>
                     </div>
 
                     <div className='suggestions__sidebar__roadmap-stats__stats'>

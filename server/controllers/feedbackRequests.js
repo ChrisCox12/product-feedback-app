@@ -18,8 +18,10 @@ export async function getAllFeedback(req, res) {
 }
 
 export async function getFeedback(req, res) {
+    const { id } = req.params;
+
     try {
-        const feedback = await Feedback.findById(req.params.id);
+        const feedback = await Feedback.findById(id);
 
         res.status(200).json(feedback);
     } catch (error) {

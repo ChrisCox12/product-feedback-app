@@ -8,6 +8,12 @@
     cursor: pointer;
 }
 
+.btn--add-feedback {
+    background-color: var(--purple);
+    color: var(--white-1);
+    border-radius: 10px;
+}
+
 .btn--cancel {
     padding: 1rem 0;
     width: 100%;
