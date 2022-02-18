@@ -13,10 +13,14 @@ import '../pages/SharedStyles/styles.css';
 export default function FeedbackCard({ item, index }) {
   const navigate = useNavigate();
   const title = item.title || '';
-  const [upvotes, setUpvotes] = useState(item.upvotes || 0);
+  //const [upvotes, setUpvotes] = useState(item.upvotes || 0);
+  const [upvotes, setUpvotes] = useState(0);
+  //let upvotes = item.upvotes || 0;
+  //const upvotes = item.upvotes || 0;
   const description = item.description || '';
   const category = item.category || '';
   const _id = item._id || '';
+  const commentLength = item.comments.length || 0;
   const [isUpvoted, setIsUpvoted] = useState(false);
   const divID = 'feedback'.concat(index);
   const prevUpvoted = useSelector(state => state.user.upvotedPosts.includes(_id));
@@ -26,11 +30,19 @@ export default function FeedbackCard({ item, index }) {
     if(prevUpvoted) {
       setIsUpvoted(true);
     }
+    //setUpvotes(item.upvotes);
   }, []);
+
+  useEffect(() => {
+    console.log('item changed');
+    console.log('item: ', item.title);
+    setUpvotes(item.upvotes);
+  }, [item])
 
   useEffect(() => {
     const post = document.getElementById(divID);
     const postUpvoteButton = post.childNodes[3].childNodes[0];
+    //console.log(postUpvoteButton);
 
     if(isUpvoted) {
       postUpvoteButton.classList.add('upvoted');
@@ -43,6 +55,8 @@ export default function FeedbackCard({ item, index }) {
 
   function vote() {
     let newUpvotes = upvotes;
+    //const post = document.getElementById(divID);
+    //const postUpvoteButton = post.childNodes[3].childNodes[0];
 
     if(!isUpvoted) {
       dispatch(addUpvotedPost(_id));
@@ -56,6 +70,9 @@ export default function FeedbackCard({ item, index }) {
     }
 
     setUpvotes(newUpvotes);
+    //upvotes = newUpvotes;
+    //postUpvoteButton.childNodes[1].textContent = newUpvotes;
+    //upvotes = newUpvotes;
     
     axios.patch('http://localhost:5050/feedback/'.concat(_id), { upvotes: newUpvotes })
         .then(res => console.log(res))
@@ -76,11 +93,11 @@ export default function FeedbackCard({ item, index }) {
               <span>
                 {isUpvoted ? <img src={arrowUpWhite} alt='upvoted' /> : <img src={arrowUp} alt='upvotes' />}
               </span> 
-              {upvotes}
+              <span>{upvotes}</span>
           </button>
           <button className='btn btn--comments' onClick={() => navigate('/feedback/'.concat(_id))}>
               <span><img src={commentBubble} alt='comments' /></span> 
-              {item.comments.length}
+              {commentLength}
           </button>
       </div>
     </div>

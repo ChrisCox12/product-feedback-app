@@ -77,6 +77,96 @@ export default function Suggestions() {
         }
     }, [toggleDrop]);
 
+    useEffect(() => {
+        let s = [...feedback];
+        switch (sortBy) {
+            case 'Most Upvotes':
+                insertionSort(s, s.length, 'mU');
+                //console.log(s);
+                setFeedback(s);
+                break;
+            case 'Least Upvotes':
+                insertionSort(s, s.length, 'lU');
+                //console.log(s)
+                setFeedback(s);
+                break;
+            case 'Most Comments':
+                insertionSort(s, s.length, 'mC');
+                //console.log(s);
+                setFeedback(s);
+                break;
+            case 'Least Comments':
+                insertionSort(s, s.length, 'lC');
+                //console.log(s);
+                setFeedback(s);
+                break;
+            default:
+                break;
+        }
+    }, [sortBy]);
+
+    function insertionSort(arr, arrLength, str) {
+        let i = 0;
+        let key = 0;
+        let j = 0;
+
+        switch (str) {
+            case 'mU':
+                for(i = 1; i < arrLength; i++){
+                    key = arr[i];
+                    j = i - 1;
+        
+                    while(j >= 0 && key.upvotes > arr[j].upvotes) {
+                        arr[j + 1] = arr[j];
+                        j = j - 1;
+                    }
+        
+                    arr[j + 1] = key;
+                }
+                break;
+            case 'lU':
+                for(i = 1; i < arrLength; i++){
+                    key = arr[i];
+                    j = i - 1;
+        
+                    while(j >= 0 && arr[j].upvotes > key.upvotes) {
+                        arr[j + 1] = arr[j];
+                        j = j - 1;
+                    }
+        
+                    arr[j + 1] = key;
+                }
+                break;
+            case 'mC':
+                for(i = 1; i < arrLength; i++){
+                    key = arr[i];
+                    j = i - 1;
+        
+                    while(j >= 0 && key.comments.length > arr[j].comments.length) {
+                        arr[j + 1] = arr[j];
+                        j = j - 1;
+                    }
+        
+                    arr[j + 1] = key;
+                }
+                break;
+            case 'lC':
+                for(i = 1; i < arrLength; i++){
+                    key = arr[i];
+                    j = i - 1;
+        
+                    while(j >= 0 && arr[j].comments.length > key.comments.length) {
+                        arr[j + 1] = arr[j];
+                        j = j - 1;
+                    }
+        
+                    arr[j + 1] = key;
+                }
+                break;
+            default:
+                break;
+        }
+    }
 
     function toggleSidebar() {
         setToggle(!toggle);
