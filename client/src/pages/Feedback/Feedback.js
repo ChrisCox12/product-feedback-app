@@ -9,6 +9,7 @@ import Comment from '../../components/Comment';
 import './Feedback.css';
 import '../SharedStyles/styles.css';
 import { signIn } from '../../actions';
+import Comments from '../../components/Comments';
 
 export default function Feedback() {
     const { id } = useParams();
@@ -16,7 +17,7 @@ export default function Feedback() {
     const isCreator = false;
     const [data, setData] = useState({ title: '', category: '', upvotes: 0, description: '', comments: [] });
     const maxCharacters = 250;
-    const [comment, setComment] = useState('');
+    const [commentText, setCommentText] = useState('');
     const isSignedIn = useSelector(state => state.isLogged);
     const user = useSelector(state => state.user);
     const dispatch = useDispatch();
@@ -33,15 +34,32 @@ export default function Feedback() {
 
     function handleFormChange(e) {
         //console.log(e.target.value)
-        setComment(e.target.value)
-
+        setCommentText(e.target.value)
     }
 
     function handleFormSubmit(e) {
         e.preventDefault();
 
-        data.comments.push(comment)
-        //console.log(data)
+        const newComment = {
+            content: commentText,
+            creator: {
+                image: user.image,
+                name: user.name,
+                username: user.username,
+                creatorID: user.userID
+            }
+        };
+
+        data.comments.push(newComment);
+
+        //console.log(data);
+
+        setData({...data});
+
+        axios.patch('http://localhost:5050/feedback/'.concat(id, '/comment'), newComment)
+            .then(res => console.log(res.data))
+            .catch(err => console.log(err));
+
     }
 
     return (
@@ -76,10 +94,11 @@ export default function Feedback() {
             </div>
 
             <div className='feedback__comments'>
-                <p className='feedback__comments__num-comments'>{data.comments.length} Comment(s)</p>
-                {data.comments.map((comment, index) => {
+                {/* <p className='feedback__comments__num-comments'>{data.comments.length} Comment(s)</p> */}
+                {/* {data.comments.map((comment, index) => {
                     return ( <Comment data={comment} key={index} /> );
-                })}
+                })} */}
+                <Comments comments={data.comments} />
             </div>
             
             {isSignedIn ? 
@@ -93,7 +112,7 @@ export default function Feedback() {
                             name='comment-input' 
                         />
                         <div className='comment-form__bottom'>
-                            <p>{maxCharacters - comment.length} Characters left</p>
+                            <p>{maxCharacters - commentText.length} Characters left</p>
                             <input 
                                 type='submit'
                                 className='btn btn--post'

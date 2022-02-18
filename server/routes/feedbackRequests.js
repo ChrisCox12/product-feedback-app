@@ -3,7 +3,8 @@ import {
     getAllFeedback, 
     getFeedback, 
     createFeedback, 
-    updateFeedback 
+    updateFeedback ,
+    addComment
 } from '../controllers/feedbackRequests.js';
 
 const router = express.Router();
@@ -14,6 +15,7 @@ router.get('/:id', getFeedback);
 router.post('/', createFeedback);
 
 router.patch('/:id', updateFeedback);
+router.patch('/:id/comment', addComment);
 
 
 

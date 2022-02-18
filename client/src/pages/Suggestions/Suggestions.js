@@ -27,7 +27,6 @@ export default function Suggestions() {
     const [feedback, setFeedback] = useState([]);
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    //const nm = useSelector(state => state.user.name)
 
     /* useEffect(() => {
         setCurrentUser({
@@ -189,7 +188,6 @@ export default function Suggestions() {
             </div>
 
             <button onClick={signAndSet}>Sign In</button>
-            {/* <button onClick={() => console.log(nm)}>Click</button> */}
         </div>
         
     );

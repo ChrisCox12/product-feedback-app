@@ -1,0 +1,17 @@
+.comments-wrapper {
+    background-color: var(--white-1);
+}
+
+.num-comments {
+    font-weight: bold;
+}
+
+@media screen and (min-width: 375px) {
+    .comments-wrapper {
+        padding: 2.5rem 1.5rem 2rem 1.5rem;
+    }
+
+    .num-comments {
+        margin-bottom: 2.5rem;
+    }
+}

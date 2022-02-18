@@ -67,3 +67,24 @@ export async function updateFeedback(req, res) {
         res.status(404).json({ message: error.message })
     }
 }
+
+export async function addComment(req, res) {
+    const comment = req.body;
+    const { id } = req.params;
+
+    try {
+        await Feedback.findByIdAndUpdate(
+            id, 
+            { 
+                $addToSet: { 
+                    comments: comment 
+                }
+            });
+
+        res.status(200).json(comment);
+    } catch (error) {
+        console.log(error);
+
+        res.status(404).json({ message: error.message });
+    }
+}

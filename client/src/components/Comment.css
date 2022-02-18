@@ -1,0 +1,27 @@
+.comment:not(:last-child) {
+    border-bottom: 1px solid var(--grey);
+}
+
+.comment__head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.comment__head__user__user-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+
+
+@media screen and (min-width: 375px) {
+    .comment__head {
+        margin-bottom: 1rem;
+    }
+
+    .comment__body {
+        margin-bottom: 1.5rem;
+    }
+}
