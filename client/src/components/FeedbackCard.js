@@ -34,10 +34,10 @@ export default function FeedbackCard({ item, index }) {
   }, []);
 
   useEffect(() => {
-    console.log('item changed');
-    console.log('item: ', item.title);
+    //console.log('item changed');
+    //console.log('item: ', item.title);
     setUpvotes(item.upvotes);
-  }, [item])
+  }, [item]);
 
   useEffect(() => {
     const post = document.getElementById(divID);
@@ -81,14 +81,14 @@ export default function FeedbackCard({ item, index }) {
 
 
   return (
-    <div className='suggestions__suggested-feedback__feedback' id={divID}>
+    <div className='suggested-feedback' id={divID}>
       <p 
-        className='suggestions__suggested-feedback__feedback__title' 
+        className='suggested-feedback__title' 
         onClick={() => navigate('/feedback/'.concat(_id))}
       >{title}</p>
-      <p className='suggestions__suggested-feedback__feedback__description'>{description}</p>
-      <div className='suggestions__suggested-feedback__feedback__category'>{category}</div>
-      <div className='suggestions__suggested-feedback__feedback__engagements'>
+      <p className='suggested-feedback__description'>{description}</p>
+      <div className='suggested-feedback__category'>{category}</div>
+      <div className='suggested-feedback__engagements'>
           <button className='btn btn--upvotes' onClick={vote}>
               <span>
                 {isUpvoted ? <img src={arrowUpWhite} alt='upvoted' /> : <img src={arrowUp} alt='upvotes' />}

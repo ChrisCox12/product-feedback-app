@@ -13,7 +13,9 @@ const feedbackSchema = mongoose.Schema({
         default: 'Suggestion'
     },
     description: String,
-    comments: [{
+    comments: [mongoose.SchemaTypes.ObjectId]
+    //comments: [Comment]
+    /* comments: [{
         content: String,
         creator: { 
             image: String,
@@ -21,7 +23,7 @@ const feedbackSchema = mongoose.Schema({
             username: String,
             creatorID: mongoose.SchemaTypes.ObjectId
         }
-    }]
+    }] */
 });
 
 const Feedback = mongoose.model('Feedback', feedbackSchema);

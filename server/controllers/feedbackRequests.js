@@ -69,11 +69,21 @@ export async function updateFeedback(req, res) {
 }
 
 export async function addComment(req, res) {
-    const comment = req.body;
-    const { id } = req.params;
+    //const comment = req.body;
+    const { id, commId } = req.params;
 
     try {
         await Feedback.findByIdAndUpdate(
+            id,
+            {
+                $addToSet: {
+                    comments: commId
+                }
+            }
+        );
+
+        res.status(200)
+        /* await Feedback.findByIdAndUpdate(
             id, 
             { 
                 $addToSet: { 
@@ -81,7 +91,7 @@ export async function addComment(req, res) {
                 }
             });
 
-        res.status(200).json(comment);
+        res.status(200).json(comment); */
     } catch (error) {
         console.log(error);
 

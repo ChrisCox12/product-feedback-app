@@ -1,0 +1,40 @@
+.suggested-feedback {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    background-color: var(--white-1);
+    padding: 1.5rem 1rem;
+    border-radius: 10px;
+}
+
+.suggested-feedback:hover {
+    cursor: pointer;
+}
+
+.suggested-feedback:hover > p:first-child {
+    color: var(--blue-2);
+}
+
+.suggested-feedback__title {
+    font-weight: bold;
+}
+
+.suggested-feedback__category {
+    border-radius: 7px;
+    border-style: none;
+    padding: .5rem 1rem;
+    background-color: var(--white-3);
+    width: min-content;
+    text-align: center;
+    color: var(--blue-2);
+    font-weight: bold;
+}
+
+.suggested-feedback__engagements {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+
+

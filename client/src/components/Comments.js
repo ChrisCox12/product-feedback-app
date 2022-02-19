@@ -1,8 +1,13 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import axios from 'axios';
 import Comment from './Comment';
 import './Comments.css';
 
 export default function Comments({ comments }) {
+
+    useEffect(() => {
+        
+    }, []);
 
     return (
         <div className='comments-wrapper'>

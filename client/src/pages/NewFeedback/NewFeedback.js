@@ -29,6 +29,11 @@ export default function NewFeedback() {
         setFeedbackDetail(e.target.value);
     }
 
+    function handleCategoryChange(str) {
+        setCategory(str);
+        setToggleDropdown(!toggleDropdown);
+    }
+
     function handleSubmit(e) {
         e.preventDefault();
         
@@ -76,19 +81,19 @@ export default function NewFeedback() {
                         </div>
                         {toggleDropdown &&
                             <ul className='new-feedback__form__category__dropdown'>
-                                <li onClick={() => setCategory('Feature')}>
+                                <li onClick={() => handleCategoryChange('Feature')}>
                                     Feature {category === 'Feature' && <span><img src={check} alt='checked' /></span>}
                                 </li>
-                                <li onClick={() => setCategory('UI')}>
+                                <li onClick={() => handleCategoryChange('UI')}>
                                     UI {category === 'UI' && <span><img src={check} alt='checked' /></span>}
                                 </li>
-                                <li onClick={() => setCategory('UX')}>
+                                <li onClick={() => handleCategoryChange('UX')}>
                                     UX {category === 'UX' && <span><img src={check} alt='checked' /></span>}
                                 </li>
-                                <li onClick={() => setCategory('Enhancement')}>
+                                <li onClick={() =>handleCategoryChange('Enhancement')}>
                                     Enhancement {category === 'Enhancement' && <span><img src={check} alt='checked' /></span>}
                                 </li>
-                                <li onClick={() => setCategory('Bug')}>
+                                <li onClick={() => handleCategoryChange('Bug')}>
                                     Bug {category === 'Bug' && <span><img src={check} alt='checked' /></span>}
                                 </li>
                             </ul>

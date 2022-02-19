@@ -18,6 +18,7 @@ export default function Feedback() {
     const [data, setData] = useState({ title: '', category: '', upvotes: 0, description: '', comments: [] });
     const maxCharacters = 250;
     const [commentText, setCommentText] = useState('');
+    const [commentIds, setCommentIds] = useState([]);
     const isSignedIn = useSelector(state => state.isLogged);
     const user = useSelector(state => state.user);
     const dispatch = useDispatch();
@@ -30,6 +31,24 @@ export default function Feedback() {
                 setData(res.data)  
             })
             .catch(err => console.log(err))
+        /* const postRequest = axios.get('http://localhost:5050/feedback/'.concat(id));
+        const commentsRequest = axios.get('http://localhost:5050/comments');
+
+        axios.all([postRequest, commentsRequest])
+            .then(
+                axios.spread((...responses) => {
+                    const res1 = responses[0].data;
+                    const res2 = responses[1].data;
+
+                    console.log( res1, res2 );
+
+                    setData(res1);
+                    setCommentIds(res2);
+                })
+            )
+            .catch(err => {
+                console.log(err)
+            }) */
     }, [id]);
 
     function handleFormChange(e) {
@@ -37,10 +56,30 @@ export default function Feedback() {
         setCommentText(e.target.value)
     }
 
-    function handleFormSubmit(e) {
+    async function handleFormSubmit(e) {
         e.preventDefault();
 
         const newComment = {
+            content: commentText,
+            creator: {
+                image: user.image,
+                name: user.name,
+                username: user.username,
+                creatorID: user.userID
+            }
+        }
+
+        try {
+            const commentRequest = await axios.post('http://localhost:5050/comments', newComment);
+            console.log(commentRequest);
+            const postRequest = await axios.patch('http://localhost:5050/feedback/'.concat(id, '/comment/', commentRequest.data._id))
+            console.log(postRequest);
+            //const postRequest = axios.patch('http')
+        } catch (error) {
+            console.log(error)
+        }
+        
+        /* const newComment = {
             content: commentText,
             creator: {
                 image: user.image,
@@ -58,7 +97,7 @@ export default function Feedback() {
 
         axios.patch('http://localhost:5050/feedback/'.concat(id, '/comment'), newComment)
             .then(res => console.log(res.data))
-            .catch(err => console.log(err));
+            .catch(err => console.log(err)); */
 
     }
 
@@ -94,11 +133,7 @@ export default function Feedback() {
             </div>
 
             <div className='feedback__comments'>
-                {/* <p className='feedback__comments__num-comments'>{data.comments.length} Comment(s)</p> */}
-                {/* {data.comments.map((comment, index) => {
-                    return ( <Comment data={comment} key={index} /> );
-                })} */}
-                <Comments comments={data.comments} />
+                {/* <Comments comments={data.comments} /> */}
             </div>
             
             {isSignedIn ? 

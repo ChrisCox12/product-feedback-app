@@ -6,15 +6,13 @@ import close from '../../assets/shared/mobile/icon-close.svg';
 import plus from '../../assets/shared/icon-plus.svg';
 import arrowDown from '../../assets/shared/icon-arrow-down.svg';
 import arrowUp from '../../assets/shared/icon-arrow-up.svg';
-import arrowUpWhite from '../../assets/shared/icon-arrow-up-white.svg';
 import emptyIllustration from '../../assets/suggestions/illustration-empty.svg';
-import commentBubble from '../../assets/shared/icon-comments.svg';
 import './Suggestions.css';
 import '../SharedStyles/styles.css';
 
 import FeedbackCard from '../../components/FeedbackCard';
 
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { signIn, setUser } from '../../actions';
 
 
@@ -176,8 +174,9 @@ export default function Suggestions() {
         setToggleDrop(!toggleDrop);
     }
 
-    function setSort(sortBy) {
-        setSortBy(sortBy);
+    function handleSortChange(sort) {
+        setSortBy(sort);
+        toggleDropDown();
     }
 
     function signAndSet() {
@@ -219,10 +218,10 @@ export default function Suggestions() {
                     </div>
 
                     <div className='suggestions__sort-bar__dropdown__dropdown-content' id='dropdown'>
-                        <button className='btn--sort-option' onClick={() => setSort('Most Upvotes')}>Most Upvotes</button>
-                        <button className='btn--sort-option' onClick={() => setSort('Least Upvotes')}>Least Upvotes</button>
-                        <button className='btn--sort-option' onClick={() => setSort('Most Comments')}>Most Comments</button>
-                        <button className='btn--sort-option' onClick={() => setSort('Least Comments')}>Least Comments</button>
+                        <button className='btn--sort-option' onClick={() => handleSortChange('Most Upvotes')}>Most Upvotes</button>
+                        <button className='btn--sort-option' onClick={() => handleSortChange('Least Upvotes')}>Least Upvotes</button>
+                        <button className='btn--sort-option' onClick={() => handleSortChange('Most Comments')}>Most Comments</button>
+                        <button className='btn--sort-option' onClick={() => handleSortChange('Least Comments')}>Least Comments</button>
                     </div>
                 </div>
                 <button className='btn btn--add-feedback' onClick={() => navigate('/feedback/new')}>
@@ -244,7 +243,7 @@ export default function Suggestions() {
                     </div>
                     :
                     feedback.map((item, index) => {
-                        return ( <FeedbackCard key={index} item={item} index={index} /> );
+                        return <FeedbackCard key={index} item={item} index={index} />
                     })
                 }
             </div>

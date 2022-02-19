@@ -16,6 +16,13 @@ export default function Comment({ comment }) {
         <button className='comment__head__reply'>Reply</button>
       </div>
       <div className='comment__body'>{comment.content}</div>
+      {comment.replies?.length > 0 && 
+        <div className='comment__replies'>
+          {comment.replies?.map((reply, index) => {
+            return <Comment />
+          })}
+        </div>
+      }
     </div>
   )
 }

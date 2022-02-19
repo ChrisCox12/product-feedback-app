@@ -15,7 +15,7 @@ router.get('/:id', getFeedback);
 router.post('/', createFeedback);
 
 router.patch('/:id', updateFeedback);
-router.patch('/:id/comment', addComment);
+router.patch('/:id/comment/:commId', addComment);
 
 
 
