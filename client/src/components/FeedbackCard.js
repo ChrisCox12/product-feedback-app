@@ -25,6 +25,7 @@ export default function FeedbackCard({ item, index }) {
   const divID = 'feedback'.concat(index);
   const prevUpvoted = useSelector(state => state.user.upvotedPosts.includes(_id));
   const dispatch = useDispatch();
+  const numComments = item.numComments || 0;
 
   useEffect(() => {
     if(prevUpvoted) {
@@ -97,7 +98,7 @@ export default function FeedbackCard({ item, index }) {
           </button>
           <button className='btn btn--comments' onClick={() => navigate('/feedback/'.concat(_id))}>
               <span><img src={commentBubble} alt='comments' /></span> 
-              {commentLength}
+              {numComments}
           </button>
       </div>
     </div>

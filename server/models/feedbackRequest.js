@@ -13,7 +13,11 @@ const feedbackSchema = mongoose.Schema({
         default: 'Suggestion'
     },
     description: String,
-    comments: [mongoose.SchemaTypes.ObjectId]
+    comments: [mongoose.SchemaTypes.ObjectId],
+    numComments: {
+        type: Number,
+        default: 0
+    }
     //comments: [Comment]
     /* comments: [{
         content: String,

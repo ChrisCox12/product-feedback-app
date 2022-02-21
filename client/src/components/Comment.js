@@ -1,14 +1,21 @@
 import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import axios from 'axios';
 import './Comment.css';
+import '../pages/SharedStyles/styles.css';
 
-export default function Comment({ commentId, level }) {
+export default function Comment({ commentId, level, parentUsername, totalComments, updateTotalComments, incrementTotalComments }) {
   //console.log(commentId);
   const [name, setName] = useState('');
   const [username, setUsername] = useState('');
   const [text, setText] = useState('');
   const [replies, setReplies] = useState([]);
   const [isReply, setIsReply] = useState(false);
+  const [replying, setReplying] = useState(false);
+  const [replyText, setReplyText] = useState('');
+  const user = useSelector(state => state.user);
+  const [id, setId] = useState('');
+  const [parent, setParent] = useState('');
 
   useEffect(() => {
     axios.get('http://localhost:5050/comments/'.concat(commentId))
@@ -19,9 +26,49 @@ export default function Comment({ commentId, level }) {
         setText(res.data.content);
         setReplies(res.data.replies);
         setIsReply(res.data.isReply);
+        setParent(parentUsername);
       })
       .catch(err => console.log(err))
-  }, [])
+  }, [commentId])
+
+  function handleReplyChange(e) {
+    setReplyText(e.target.value);
+  }
+
+  function handleFormSubmit(e) {
+    e.preventDefault();
+
+    setReplying(!replying);
+
+    //const newTotalComments = totalComments + 1;
+    //updateTotalComments(newTotalComments);
+
+    incrementTotalComments();
+    
+    const toSubmit = {
+      content: replyText,
+      creator: {
+        image: user.image,
+        name: user.name,
+        username: user.username,
+        creatorID: user.userID
+      }
+    }
+
+    axios.post('http://localhost:5050/comments', toSubmit)
+      .then(res => {
+        const newReplies = [...replies];
+        newReplies.push(res.data);
+
+        setReplies(newReplies);
+
+        axios.patch('http://localhost:5050/comments/'.concat(commentId, '/', res.data))
+          .then(res => console.log(res.data))
+          .catch(err => console.log(err))
+      })
+      .catch(err => console.log(err))
+  }
+
 
   return (
     <div className='comment'>
@@ -32,17 +79,45 @@ export default function Comment({ commentId, level }) {
             <p className='comment__head__user__user-info__username'>@{username}</p>
           </div>
         </div>
-        <button className='comment__head__reply'>Reply</button>
+        {level < 3 && 
+          <button 
+            className='comment__head__reply' 
+            onClick={() => setReplying(!replying)}
+          >Reply</button>
+        }
       </div>
-      <div className='comment__body'>{text}</div>
-      {replies.length > 0 && level < 3 ? 
+      <div className='comment__body'>
+        {parent.length > 0 && <span>@{parent}</span>} {' '}
+        {text}
+      </div>
+      {replying && 
+        <div>
+          <form onSubmit={handleFormSubmit}>
+            <input 
+              type='text' 
+              onChange={handleReplyChange} 
+            />
+            <input 
+              type='submit' 
+              value='Post Reply' 
+              className='btn btn--save' 
+            />
+          </form>
+        </div>
+      }
+      {replies.length > 0 && level < 3 && 
         <div className='comment__replies'>
           {replies.map((reply, index) => {
-            return <Comment commentId={reply} key={index} level={level+1} />
+            return (
+              <Comment 
+                commentId={reply} 
+                key={index} 
+                level={level+1} 
+                parentUsername={username} 
+              />
+            )
           })}
         </div>
-        :
-        <div>huh</div>
       }
       {/* <div className='comment__head'>
         <div className='comment__head__user'>

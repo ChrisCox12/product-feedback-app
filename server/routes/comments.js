@@ -3,7 +3,8 @@ import {
     getAllComments, 
     getComment, 
     createComment, 
-    updateComment 
+    updateComment,
+    addReply 
 } from '../controllers/comments.js';
 
 const router = express.Router();
@@ -14,6 +15,7 @@ router.get('/:id', getComment);
 router.post('/', createComment);
 
 router.patch('/:id', updateComment);
+router.patch('/:id/:replyId', addReply);
 //router.patch('/:id/comment', addComment);
 
 

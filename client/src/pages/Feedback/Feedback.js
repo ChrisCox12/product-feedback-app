@@ -15,21 +15,23 @@ export default function Feedback() {
     const { id } = useParams();
     const navigate= useNavigate();
     const isCreator = false;
-    const [data, setData] = useState({ title: '', category: '', upvotes: 0, description: '', comments: [] });
+    const [data, setData] = useState({ title: '', category: '', upvotes: 0, description: '', comments: [], numComments: 0 });
     const maxCharacters = 250;
     const [commentText, setCommentText] = useState('');
     const [commentIds, setCommentIds] = useState([]);
     const isSignedIn = useSelector(state => state.isLogged);
     const user = useSelector(state => state.user);
     const dispatch = useDispatch();
+    const [numComments, setNumComments] = useState(0);
 
     useEffect(() => {
         //console.log(id)
         axios.get('http://localhost:5050/feedback/'.concat(id))
             .then(res => {
-                //console.log(res)
+                //console.log(res.data)
                 setData(res.data);
                 setCommentIds(res.data.comments); 
+                setNumComments(res.data.numComments);
             })
             .catch(err => console.log(err))
         /* const postRequest = axios.get('http://localhost:5050/feedback/'.concat(id));
@@ -53,8 +55,26 @@ export default function Feedback() {
     }, [id]);
 
     function handleFormChange(e) {
-        //console.log(e.target.value)
-        setCommentText(e.target.value)
+        setCommentText(e.target.value);
+    }
+
+    function incrementTotalComments() {
+        const newNumComments = numComments + 1;
+        
+        setNumComments(newNumComments);
+        
+        const toSubmit = {
+            title: data.title,
+            category: data.category,
+            upvotes: data.upvotes,
+            description: data.description,
+            comments: data.comments,
+            numComments: newNumComments
+        };
+
+        axios.patch('http://localhost:5050/feedback/'.concat(id), toSubmit)
+            .then(res => console.log(res.data))
+            .catch(err => console.log(err))
     }
 
     function handleFormSubmit(e) {
@@ -68,7 +88,7 @@ export default function Feedback() {
                 username: user.username,
                 creatorID: user.userID
             }
-        }
+        };
 
         axios.post('http://localhost:5050/comments', newComment)
             .then(res => {
@@ -137,16 +157,21 @@ export default function Feedback() {
                     </button>
                     <div className='feedback__details__engagements__comments'>
                         <span><img src={commentBubble} alt='comment bubble' /></span>
-                        {data.comments.length}
+                        {numComments}
                     </div>
                 </div>
             </div>
 
             <div className='feedback__comments'>
-                {<Comments commentIds={commentIds} />}
+                <Comments 
+                    commentIds={commentIds}
+                    totalComments={numComments}
+                    updateTotalComments={setNumComments}
+                    incrementTotalComments={incrementTotalComments}
+                />
             </div>
             
-            {isSignedIn ? 
+            {isSignedIn &&
                 <div className='feedback__add-comment'>
                     <form className='comment-form' onSubmit={handleFormSubmit}>
                         <label htmlFor='comment-input'>Add Comment</label>
@@ -166,8 +191,6 @@ export default function Feedback() {
                         </div>
                     </form>
                 </div>
-                : 
-                null
             }
         </div>
     );

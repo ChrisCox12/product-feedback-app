@@ -33,7 +33,8 @@ export async function createComment(req, res) {
     try {
         await newComment.save();
 
-        res.status(200).json(newComment);
+        //res.status(200).json(newComment);
+        res.status(200).json(newComment._id);
     } catch (error) {
         console.log(error);
 
@@ -49,6 +50,27 @@ export async function updateComment(req, res) {
         await Comment.findByIdAndUpdate(id, update);
 
         res.status(200).json(update);
+    } catch (error) {
+        console.log(error);
+
+        res.status(404).json({ message: error.message });
+    }
+}
+
+export async function addReply(req, res) {
+    const { id, replyId } = req.params;
+
+    try {
+        await Comment.findByIdAndUpdate(
+            id,
+            {
+                $addToSet: {
+                    replies: replyId
+                }
+            }
+        );
+
+        res.status(200);
     } catch (error) {
         console.log(error);
 

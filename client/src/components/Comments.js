@@ -1,9 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Comment from './Comment';
 import './Comments.css';
 
-export default function Comments({ commentIds }) {
+export default function Comments({ commentIds, totalComments, updateTotalComments, incrementTotalComments }) {
 
     useEffect(() => {
         
@@ -11,10 +11,20 @@ export default function Comments({ commentIds }) {
 
     return (
         <div className='comments-wrapper'>
-            <p className='num-comments'>{commentIds.length} Comments</p>
+            <p className='num-comments'>{totalComments} Comments</p>
             {commentIds.length > 0 &&
                 commentIds.map((commentId, index) => {
-                    return <Comment commentId={commentId} key={index} level={1} />
+                    return (
+                        <Comment 
+                            commentId={commentId} 
+                            key={index} 
+                            level={1} 
+                            parentUsername={''}
+                            totalComments={totalComments}
+                            updateTotalComments={updateTotalComments}
+                            incrementTotalComments={incrementTotalComments}
+                        />
+                    )
                 })
             }
             {/* <p className='num-comments'>{comments.length} Comments</p>

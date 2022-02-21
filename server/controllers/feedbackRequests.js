@@ -42,7 +42,8 @@ export async function createFeedback(req, res) {
     try {
         await newFeedback.save();
 
-        res.status(200).json(newFeedback);
+        //res.status(200).json(newFeedback);
+        res.status(200).json(newFeedback._id);
     } 
     catch(error) {
         console.log(error);
