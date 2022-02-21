@@ -27,8 +27,9 @@ export default function Feedback() {
         //console.log(id)
         axios.get('http://localhost:5050/feedback/'.concat(id))
             .then(res => {
-                console.log(res)
-                setData(res.data)  
+                //console.log(res)
+                setData(res.data);
+                setCommentIds(res.data.comments); 
             })
             .catch(err => console.log(err))
         /* const postRequest = axios.get('http://localhost:5050/feedback/'.concat(id));
@@ -56,7 +57,7 @@ export default function Feedback() {
         setCommentText(e.target.value)
     }
 
-    async function handleFormSubmit(e) {
+    function handleFormSubmit(e) {
         e.preventDefault();
 
         const newComment = {
@@ -69,15 +70,24 @@ export default function Feedback() {
             }
         }
 
-        try {
+        axios.post('http://localhost:5050/comments', newComment)
+            .then(res => {
+                //console.log(res.data)
+                axios.patch('http://localhost:5050/feedback/'.concat(id, '/comment/', res.data._id))
+                    .then(res => console.log(res.data))
+                    .catch(err => console.log(err))
+            })
+            .catch(err => console.log(err))
+        /* try {
+            
             const commentRequest = await axios.post('http://localhost:5050/comments', newComment);
-            console.log(commentRequest);
-            const postRequest = await axios.patch('http://localhost:5050/feedback/'.concat(id, '/comment/', commentRequest.data._id))
-            console.log(postRequest);
+            console.log('comment request: ', commentRequest);
+            const postRequest = await axios.patch('http://localhost:5050/feedback/'.concat(id, '/comment/', commentRequest?.data._id))
+            console.log('post request: ', postRequest);
             //const postRequest = axios.patch('http')
         } catch (error) {
             console.log(error)
-        }
+        } */
         
         /* const newComment = {
             content: commentText,
@@ -133,7 +143,7 @@ export default function Feedback() {
             </div>
 
             <div className='feedback__comments'>
-                {/* <Comments comments={data.comments} /> */}
+                {<Comments commentIds={commentIds} />}
             </div>
             
             {isSignedIn ? 
