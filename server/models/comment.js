@@ -8,12 +8,13 @@ const commentSchema = mongoose.Schema({
         username: String,
         creatorID: mongoose.SchemaTypes.ObjectId
     },
-    isReply: {
+    hasRootId: {
         type: Boolean, 
         default: false
     },
-    replyTo: mongoose.SchemaTypes.ObjectId,
-    replies: [mongoose.SchemaTypes.ObjectId]
+    replyTo: String,
+    replies: [mongoose.SchemaTypes.ObjectId],
+    rootCommentId: mongoose.SchemaTypes.ObjectId
 });
 
 const Comment = mongoose.model('Comment', commentSchema);

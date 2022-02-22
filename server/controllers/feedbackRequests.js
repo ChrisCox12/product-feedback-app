@@ -70,7 +70,6 @@ export async function updateFeedback(req, res) {
 }
 
 export async function addComment(req, res) {
-    //const comment = req.body;
     const { id, commId } = req.params;
 
     try {
@@ -83,16 +82,28 @@ export async function addComment(req, res) {
             }
         );
 
-        res.status(200)
-        /* await Feedback.findByIdAndUpdate(
-            id, 
-            { 
-                $addToSet: { 
-                    comments: comment 
-                }
-            });
+        res.status(200).json(commId);
+    } catch (error) {
+        console.log(error);
 
-        res.status(200).json(comment); */
+        res.status(404).json({ message: error.message });
+    }
+}
+
+export async function incrementNumComments(req, res) {
+    const { id } = req.params;
+
+    try {
+        await Feedback.findByIdAndUpdate(
+            id, 
+            {
+                $inc: {
+                    numComments: 1
+                }
+            }
+        );
+
+        res.status(200).json(id);
     } catch (error) {
         console.log(error);
 

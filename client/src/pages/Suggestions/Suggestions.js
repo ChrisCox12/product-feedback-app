@@ -189,6 +189,16 @@ export default function Suggestions() {
             .catch(err => console.log(err));
     }
 
+    function signAndSet2() {
+        axios.get('http://localhost:5050/users/'.concat('62142a57f09c2c3bae9a3a8c'))
+            .then(res => {
+                //console.log(res.data)
+                dispatch(signIn());
+                dispatch(setUser(res.data));
+            })
+            .catch(err => console.log(err));
+    }
+
 
     return (
         <div className='suggestions'>
@@ -277,6 +287,7 @@ export default function Suggestions() {
             </div>
 
             <button onClick={signAndSet}>Sign In</button>
+            <button onClick={signAndSet2}>Sign In 2</button>
         </div>
         
     );

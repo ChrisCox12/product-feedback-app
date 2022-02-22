@@ -34,7 +34,7 @@ export async function createComment(req, res) {
         await newComment.save();
 
         //res.status(200).json(newComment);
-        res.status(200).json(newComment._id);
+        res.status(200).json(newComment);
     } catch (error) {
         console.log(error);
 

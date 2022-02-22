@@ -4,7 +4,7 @@ import axios from 'axios';
 import './Comment.css';
 import '../pages/SharedStyles/styles.css';
 
-export default function Comment({ commentId, level, parentUsername, totalComments, updateTotalComments, incrementTotalComments }) {
+export default function Comment({ commentId, rootCommentId, level, parentUsername, replyTo, totalComments, updateTotalComments, incrementTotalComments }) {
   //console.log(commentId);
   const [name, setName] = useState('');
   const [username, setUsername] = useState('');
@@ -16,6 +16,8 @@ export default function Comment({ commentId, level, parentUsername, totalComment
   const user = useSelector(state => state.user);
   const [id, setId] = useState('');
   const [parent, setParent] = useState('');
+  const [rootId, setRootId] = useState('');
+  const [replyingTo, setReplyingTo] = useState('');
 
   useEffect(() => {
     axios.get('http://localhost:5050/comments/'.concat(commentId))
@@ -27,6 +29,9 @@ export default function Comment({ commentId, level, parentUsername, totalComment
         setReplies(res.data.replies);
         setIsReply(res.data.isReply);
         setParent(parentUsername);
+        setRootId(rootCommentId);
+        //setReplyingTo(replyTo);
+        res.data.hasRootId ? setReplyingTo(res.data.replyTo) : setReplyingTo(res.data.creator.username);
       })
       .catch(err => console.log(err))
   }, [commentId])
@@ -52,17 +57,20 @@ export default function Comment({ commentId, level, parentUsername, totalComment
         name: user.name,
         username: user.username,
         creatorID: user.userID
-      }
+      },
+      hasRootId: true,
+      rootCommentId: rootId,
+      replyTo: replyingTo
     }
 
     axios.post('http://localhost:5050/comments', toSubmit)
       .then(res => {
-        const newReplies = [...replies];
-        newReplies.push(res.data);
+        //const newReplies = [...replies];
+        //newReplies.push(res.data);
 
-        setReplies(newReplies);
-
-        axios.patch('http://localhost:5050/comments/'.concat(commentId, '/', res.data))
+        //setReplies(newReplies);
+        console.log(res.data)
+        axios.patch('http://localhost:5050/comments/'.concat(rootId, '/', res.data))
           .then(res => console.log(res.data))
           .catch(err => console.log(err))
       })
@@ -78,16 +86,15 @@ export default function Comment({ commentId, level, parentUsername, totalComment
             <p className='comment__head__user__user-info__name'>{name}</p>
             <p className='comment__head__user__user-info__username'>@{username}</p>
           </div>
-        </div>
-        {level < 3 && 
-          <button 
-            className='comment__head__reply' 
-            onClick={() => setReplying(!replying)}
-          >Reply</button>
-        }
+        </div> 
+        <button 
+          className='comment__head__reply' 
+          onClick={() => setReplying(!replying)}
+        >Reply</button>  
       </div>
       <div className='comment__body'>
-        {parent.length > 0 && <span>@{parent}</span>} {' '}
+        {/* {parent.length > 0 && <span>@{parent}</span>} {' '} */}
+        {replyingTo.length > 0 && <span>@{replyingTo}</span>} {' '}
         {text}
       </div>
       {replying && 
@@ -105,15 +112,18 @@ export default function Comment({ commentId, level, parentUsername, totalComment
           </form>
         </div>
       }
-      {replies.length > 0 && level < 3 && 
+      {replies.length > 0 && 
         <div className='comment__replies'>
           {replies.map((reply, index) => {
             return (
               <Comment 
                 commentId={reply} 
+                rootCommentId={rootId}
                 key={index} 
-                level={level+1} 
-                parentUsername={username} 
+                level={2} 
+                parentUsername={username}
+                replyTo={replyingTo}
+                incrementTotalComments={incrementTotalComments}
               />
             )
           })}

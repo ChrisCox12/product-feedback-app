@@ -23,36 +23,53 @@ export default function Feedback() {
     const user = useSelector(state => state.user);
     const dispatch = useDispatch();
     const [numComments, setNumComments] = useState(0);
+    const [rootComments, setRootComments] = useState([]);
 
     useEffect(() => {
-        //console.log(id)
         axios.get('http://localhost:5050/feedback/'.concat(id))
             .then(res => {
-                //console.log(res.data)
+                console.log(res.data)
                 setData(res.data);
                 setCommentIds(res.data.comments); 
                 setNumComments(res.data.numComments);
             })
             .catch(err => console.log(err))
-        /* const postRequest = axios.get('http://localhost:5050/feedback/'.concat(id));
-        const commentsRequest = axios.get('http://localhost:5050/comments');
-
-        axios.all([postRequest, commentsRequest])
-            .then(
-                axios.spread((...responses) => {
-                    const res1 = responses[0].data;
-                    const res2 = responses[1].data;
-
-                    console.log( res1, res2 );
-
-                    setData(res1);
-                    setCommentIds(res2);
-                })
-            )
-            .catch(err => {
-                console.log(err)
-            }) */
+        
     }, [id]);
+
+    useEffect(() => {
+        
+        const controller = new AbortController();
+
+        async function getRootComments() {
+            let newRootComments = [...rootComments];
+
+            for(let i = 0; i < commentIds.length; i++) {
+                await axios.get('http://localhost:5050/comments/'.concat(commentIds[i]))
+                    .then(res => {
+                        console.log(res.data);
+                        newRootComments.push(res.data);
+                    })
+                    .catch(err => console.log(err))
+            }
+            
+            setRootComments(newRootComments);
+        }
+
+
+        if(commentIds.length > 0 && rootComments.length === 0) getRootComments();
+
+        return () => controller.abort();
+    }, [commentIds, rootComments]);
+
+    useEffect(() => {
+        console.log('root comments: ', rootComments)
+        //have to get sub comments here
+        //      v
+
+        
+    }, [rootComments])
+
 
     function handleFormChange(e) {
         setCommentText(e.target.value);
@@ -77,7 +94,7 @@ export default function Feedback() {
             .catch(err => console.log(err))
     }
 
-    function handleFormSubmit(e) {
+    async function handleFormSubmit(e) {
         e.preventDefault();
 
         const newComment = {
@@ -90,45 +107,22 @@ export default function Feedback() {
             }
         };
 
-        axios.post('http://localhost:5050/comments', newComment)
-            .then(res => {
-                //console.log(res.data)
-                axios.patch('http://localhost:5050/feedback/'.concat(id, '/comment/', res.data._id))
-                    .then(res => console.log(res.data))
-                    .catch(err => console.log(err))
-            })
-            .catch(err => console.log(err))
-        /* try {
+        try {
+            const saveCommentRequest = await axios.post('http://localhost:5050/comments', newComment);
             
-            const commentRequest = await axios.post('http://localhost:5050/comments', newComment);
-            console.log('comment request: ', commentRequest);
-            const postRequest = await axios.patch('http://localhost:5050/feedback/'.concat(id, '/comment/', commentRequest?.data._id))
-            console.log('post request: ', postRequest);
-            //const postRequest = axios.patch('http')
+            await axios.patch('http://localhost:5050/feedback/'.concat(id, '/comment/', saveCommentRequest.data._id));
+            await axios.patch('http://localhost:5050/feedback/'.concat(id, '/incrementComments'));
+
+            console.log('save comment request: ', saveCommentRequest.data);
+
+            let rs = [...rootComments];
+            rs.push(saveCommentRequest.data);
+            setRootComments(rs);
+            setCommentText('');
+            setNumComments(numComments+1);
         } catch (error) {
             console.log(error)
-        } */
-        
-        /* const newComment = {
-            content: commentText,
-            creator: {
-                image: user.image,
-                name: user.name,
-                username: user.username,
-                creatorID: user.userID
-            }
-        };
-
-        data.comments.push(newComment);
-
-        //console.log(data);
-
-        setData({...data});
-
-        axios.patch('http://localhost:5050/feedback/'.concat(id, '/comment'), newComment)
-            .then(res => console.log(res.data))
-            .catch(err => console.log(err)); */
-
+        }
     }
 
     return (
@@ -164,10 +158,8 @@ export default function Feedback() {
 
             <div className='feedback__comments'>
                 <Comments 
-                    commentIds={commentIds}
                     totalComments={numComments}
-                    updateTotalComments={setNumComments}
-                    incrementTotalComments={incrementTotalComments}
+                    rootComments={rootComments}
                 />
             </div>
             
