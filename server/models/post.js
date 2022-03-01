@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-const feedbackSchema = mongoose.Schema({
+const postSchema = mongoose.Schema({
     creatorID: mongoose.SchemaTypes.ObjectId,
     title: String,
     category: String,
@@ -17,19 +17,13 @@ const feedbackSchema = mongoose.Schema({
     numComments: {
         type: Number,
         default: 0
+    },
+    created_at: {
+        type: Date,
+        default: Date.now()
     }
-    //comments: [Comment]
-    /* comments: [{
-        content: String,
-        creator: { 
-            image: String,
-            name: String,
-            username: String,
-            creatorID: mongoose.SchemaTypes.ObjectId
-        }
-    }] */
 });
 
-const Feedback = mongoose.model('Feedback', feedbackSchema);
+const Post = mongoose.model('Post', postSchema);
 
-export default Feedback;
+export default Post;

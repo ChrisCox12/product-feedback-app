@@ -6,50 +6,44 @@ import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { addUpvotedPost, removeUpvotedPost } from '../actions';
 import axios from 'axios';
-import './FeedbackCard.css';
+import './PostCard.css';
 import '../pages/SharedStyles/styles.css';
 
 
-export default function FeedbackCard({ item, index }) {
+export default function PostCard({ post, index }) {
   const navigate = useNavigate();
-  const title = item.title || '';
-  //const [upvotes, setUpvotes] = useState(item.upvotes || 0);
+  const title = post.title || '';
   const [upvotes, setUpvotes] = useState(0);
-  //let upvotes = item.upvotes || 0;
-  //const upvotes = item.upvotes || 0;
-  const description = item.description || '';
-  const category = item.category || '';
-  const _id = item._id || '';
-  const commentLength = item.comments.length || 0;
+  const description = post.description || '';
+  const category = post.category || '';
+  const _id = post._id || '';
+  const commentLength = post.comments.length || 0;
   const [isUpvoted, setIsUpvoted] = useState(false);
   const divID = 'feedback'.concat(index);
   const prevUpvoted = useSelector(state => state.user.upvotedPosts.includes(_id));
   const dispatch = useDispatch();
-  const numComments = item.numComments || 0;
+  const numComments = post.numComments || 0;
+  const POST_STRING = 'http://localhost:5050/posts/';
 
   useEffect(() => {
     if(prevUpvoted) {
       setIsUpvoted(true);
     }
-    //setUpvotes(item.upvotes);
   }, []);
 
   useEffect(() => {
-    //console.log('item changed');
-    //console.log('item: ', item.title);
-    setUpvotes(item.upvotes);
-  }, [item]);
+    setUpvotes(post.upvotes);
+  }, [post]);
 
   useEffect(() => {
-    const post = document.getElementById(divID);
-    const postUpvoteButton = post.childNodes[3].childNodes[0];
-    //console.log(postUpvoteButton);
+    const card = document.getElementById(divID);
+    const cardUpvoteButton = card.childNodes[3].childNodes[0];
 
     if(isUpvoted) {
-      postUpvoteButton.classList.add('upvoted');
+      cardUpvoteButton.classList.add('upvoted');
     }
     else {
-      postUpvoteButton.classList.remove('upvoted');
+      cardUpvoteButton.classList.remove('upvoted');
     }
   }, [isUpvoted]);
 
@@ -75,7 +69,7 @@ export default function FeedbackCard({ item, index }) {
     //postUpvoteButton.childNodes[1].textContent = newUpvotes;
     //upvotes = newUpvotes;
     
-    axios.patch('http://localhost:5050/feedback/'.concat(_id), { upvotes: newUpvotes })
+    axios.patch(POST_STRING.concat(_id), { upvotes: newUpvotes })
         .then(res => console.log(res))
         .catch(err => console.log(err));
   }
@@ -85,7 +79,7 @@ export default function FeedbackCard({ item, index }) {
     <div className='suggested-feedback' id={divID}>
       <p 
         className='suggested-feedback__title' 
-        onClick={() => navigate('/feedback/'.concat(_id))}
+        onClick={() => navigate('/post/'.concat(_id))}
       >{title}</p>
       <p className='suggested-feedback__description'>{description}</p>
       <div className='suggested-feedback__category'>{category}</div>

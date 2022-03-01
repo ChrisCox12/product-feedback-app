@@ -1,11 +1,11 @@
 import './App.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Feedback from './pages/Feedback/Feedback';
+import Post from './pages/Post/Post';
 import Roadmap from './pages/Roadmap/Roadmap';
-import Suggestions from './pages/Suggestions/Suggestions';
+import PostBoard from './pages/PostBoard/PostBoard';
 import PageNotFound from './pages/PageNotFound/PageNotFound';
-import NewFeedback from './pages/NewFeedback/NewFeedback';
-import EditFeedback from './pages/EditFeedback/EditFeedback';
+import NewPost from './pages/NewPost/NewPost';
+import EditPost from './pages/EditPost/EditPost';
 
 
 function App() {
@@ -13,15 +13,15 @@ function App() {
     <Router>
       <div className="App">
         <Routes>
-          <Route path="/" element={<Suggestions />} />
+          <Route path="/" element={<PostBoard />} />
 
-          <Route path='feedback/edit/:id' element={<EditFeedback />} />
+          <Route path='post/edit/:id' element={<EditPost />} />
           
-          <Route path='feedback/new' element={<NewFeedback />} />
+          <Route path='post/new' element={<NewPost />} />
 
-          <Route path='feedback/:id' element={<Feedback />} />
+          <Route path='post/:id' element={<Post />} />
 
-          <Route path='feedback' element={<Feedback />} />
+          <Route path='post' element={<Post />} />
 
           <Route path='roadmap' element={<Roadmap />} />
 

@@ -3,7 +3,7 @@ import axios from 'axios';
 import Comment from './Comment';
 import './Comments.css';
 
-export default function Comments({ totalComments, rootComments, incrementTotalComments }) {
+export default function Comments({ totalComments, rootComments }) {
 
     useEffect(() => {
         
@@ -12,29 +12,16 @@ export default function Comments({ totalComments, rootComments, incrementTotalCo
     return (
         <div className='comments-wrapper'>
             <p className='num-comments'>{totalComments} Comments</p>
-            {/* {commentIds.length > 0 &&
-                commentIds.map((commentId, index) => {
+            <div className='comments-section'>
+                {rootComments.map((rootComment, index) => {
                     return (
                         <Comment 
-                            commentId={commentId} 
-                            rootCommentId={commentId}
                             key={index} 
-                            level={1} 
-                            parentUsername={''}
-                            replyTo={''}
-                            totalComments={totalComments}
-                            updateTotalComments={updateTotalComments}
-                            incrementTotalComments={incrementTotalComments}
+                            comment={rootComment}
                         />
                     )
-                })
-            } */}
-            {/* <p className='num-comments'>{comments.length} Comments</p>
-            {comments.length > 0 && 
-                comments.map((comment, index) => {
-                    return <Comment comment={comment} key={index} />
-                })
-            } */}
+                })}
+            </div>
         </div>
     )
 }

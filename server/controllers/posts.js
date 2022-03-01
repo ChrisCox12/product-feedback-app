@@ -1,15 +1,15 @@
-import Feedback from '../models/feedbackRequest.js';
+import Post from '../models/post.js';
 
 
 /*////////////////////////////
 /////       GET         /////
 //////////////////////////*/
 
-export async function getAllFeedback(req, res) {
+export async function getAllPosts(req, res) {
     try {
-        const feedback = await Feedback.find();
+        const post = await Post.find();
 
-        res.status(200).json(feedback);
+        res.status(200).json(post);
     } catch (error) {
         console.log(error);
 
@@ -17,13 +17,13 @@ export async function getAllFeedback(req, res) {
     }
 }
 
-export async function getFeedback(req, res) {
+export async function getPost(req, res) {
     const { id } = req.params;
 
     try {
-        const feedback = await Feedback.findById(id);
+        const post = await Post.findById(id);
 
-        res.status(200).json(feedback);
+        res.status(200).json(post);
     } catch (error) {
         console.log(error);
 
@@ -35,15 +35,15 @@ export async function getFeedback(req, res) {
 /////       POST        /////
 //////////////////////////*/
 
-export async function createFeedback(req, res) {
-    const feedback = req.body;
-    const newFeedback = new Feedback(feedback);
+export async function createPost(req, res) {
+    const post = req.body;
+    const newPost = new Post(post);
 
     try {
-        await newFeedback.save();
+        await newPost.save();
 
         //res.status(200).json(newFeedback);
-        res.status(200).json(newFeedback._id);
+        res.status(200).json(newPost._id);
     } 
     catch(error) {
         console.log(error);
@@ -56,12 +56,12 @@ export async function createFeedback(req, res) {
 /////       PATCH       /////
 ///////////////////////////*/
 
-export async function updateFeedback(req, res) {
+export async function updatePost(req, res) {
     const update = req.body;
     const { id } = req.params;
 
     try {
-        await Feedback.findByIdAndUpdate(id, update);
+        await Post.findByIdAndUpdate(id, update);
 
         res.status(200).json(update);
     } catch (error) {
@@ -73,7 +73,7 @@ export async function addComment(req, res) {
     const { id, commId } = req.params;
 
     try {
-        await Feedback.findByIdAndUpdate(
+        await Post.findByIdAndUpdate(
             id,
             {
                 $addToSet: {
@@ -94,7 +94,7 @@ export async function incrementNumComments(req, res) {
     const { id } = req.params;
 
     try {
-        await Feedback.findByIdAndUpdate(
+        await Post.findByIdAndUpdate(
             id, 
             {
                 $inc: {

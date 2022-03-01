@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-const commentSchema = mongoose.Schema({
+const replySchema = mongoose.Schema({
     content: String,
     creator: {
         image: String,
@@ -8,13 +8,15 @@ const commentSchema = mongoose.Schema({
         username: String,
         creatorID: mongoose.SchemaTypes.ObjectId
     },
-    replies: [mongoose.SchemaTypes.ObjectId],
+    replyingTo: String,
+    rootCommentId: mongoose.SchemaTypes.ObjectId,
     created_at: {
         type: Date,
         default: Date.now()
     }
 });
 
-const Comment = mongoose.model('Comment', commentSchema);
+const Reply = mongoose.model('Reply', replySchema);
 
-export default Comment;
+export default Reply;
+

@@ -7,10 +7,10 @@ import penTip from '../../assets/shared/icon-edit-feedback.svg';
 import downArrow from '../../assets/shared/icon-arrow-down.svg';
 import upArrow from '../../assets/shared/icon-arrow-up.svg';
 import check from '../../assets/shared/icon-check.svg';
-import './EditFeedback.css';
+import './EditPost.css';
 import '../SharedStyles/styles.css';
 
-export default function EditFeedback() {
+export default function EditPost() {
   const [toggleCategoryDropdown, setToggleCategoryDropdown] = useState(false);
   const [toggleStatusDropdown, setToggleStatusDropdown] = useState(false);
   const [status, setStatus] = useState('');

@@ -1,4 +1,5 @@
 import Comment from '../models/comment.js';
+import mongoose from 'mongoose';
 
 export async function getAllComments(req, res) {
     try {
@@ -9,6 +10,22 @@ export async function getAllComments(req, res) {
         console.log(error);
 
         res.status(404).json({ message: error.message });
+    }
+}
+
+export async function getAllChildrenOfParent(req, res) {
+    const { id } = req.params;
+
+    try {
+        const objId = new mongoose.Types.ObjectId(id);
+
+        const children = await Comment.find({ rootCommentId: objId });
+
+        res.status(200).json(children);
+    } catch (error) {
+      console.log(error);
+      
+      res.status(404).json({ message: error.message });
     }
 }
 

@@ -6,12 +6,12 @@ import upArrow from '../../assets/shared/icon-arrow-up.svg';
 import leftArrow from '../../assets/shared/icon-arrow-left.svg';
 import commentBubble from '../../assets/shared/icon-comments.svg';
 import Comment from '../../components/Comment';
-import './Feedback.css';
+import './Post.css';
 import '../SharedStyles/styles.css';
 import { signIn } from '../../actions';
 import Comments from '../../components/Comments';
 
-export default function Feedback() {
+export default function Post() {
     const { id } = useParams();
     const navigate= useNavigate();
     const isCreator = false;
@@ -24,9 +24,12 @@ export default function Feedback() {
     const dispatch = useDispatch();
     const [numComments, setNumComments] = useState(0);
     const [rootComments, setRootComments] = useState([]);
+    const [subComments, setSubComments] = useState([]);
+    const COMMENTS_STRING = 'http://localhost:5050/comments/';
+    const FEEDBACK_STRING = 'http://localhost:5050/feedback/';
 
     useEffect(() => {
-        axios.get('http://localhost:5050/feedback/'.concat(id))
+        axios.get(FEEDBACK_STRING.concat(id))
             .then(res => {
                 console.log(res.data)
                 setData(res.data);
@@ -42,10 +45,11 @@ export default function Feedback() {
         const controller = new AbortController();
 
         async function getRootComments() {
-            let newRootComments = [...rootComments];
+            //let newRootComments = [...rootComments];
+            let newRootComments = [];
 
             for(let i = 0; i < commentIds.length; i++) {
-                await axios.get('http://localhost:5050/comments/'.concat(commentIds[i]))
+                await axios.get(COMMENTS_STRING.concat(commentIds[i]))
                     .then(res => {
                         console.log(res.data);
                         newRootComments.push(res.data);
@@ -66,7 +70,29 @@ export default function Feedback() {
         console.log('root comments: ', rootComments)
         //have to get sub comments here
         //      v
+        const controller = new AbortController();
 
+        async function getSubComments() {
+            let newSubComments = [];
+
+            for(let i = 0; i < rootComments.length; i++) {
+                if(rootComments[i].replies.length > 0) {
+                    try {
+                        const response = await axios.get(COMMENTS_STRING.concat(rootComments[i]._id, '/children'));
+
+                        console.log('Sub comment response: ', response.data);
+                        //newSubComments.push(response.data);
+                    } 
+                    catch(error) {
+                        console.log(error);
+                    }
+                }
+            }
+        }
+
+        getSubComments();
+
+        return () => controller.abort();
         
     }, [rootComments])
 

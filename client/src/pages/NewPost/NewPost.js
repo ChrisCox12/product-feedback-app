@@ -7,26 +7,27 @@ import leftArrow from '../../assets/shared/icon-arrow-left.svg';
 import downArrow from '../../assets/shared/icon-arrow-down.svg';
 import upArrow from '../../assets/shared/icon-arrow-up.svg';
 import check from '../../assets/shared/icon-check.svg';
-import newFeedbackIcon from '../../assets/shared/icon-new-feedback.svg';
-import './NewFeedback.css';
+import newPostIcon from '../../assets/shared/icon-new-feedback.svg';
+import './NewPost.css';
 import '../SharedStyles/styles.css';
 
-export default function NewFeedback() {
+export default function NewPost() {
     const [toggleDropdown, setToggleDropdown] = useState(false);
-    const [feedbackTitle, setFeedbackTitle] = useState('');
+    const [postTitle, setPostTitle] = useState('');
     const [category, setCategory] = useState('Feature');
-    const [feedbackDetail, setFeedbackDetail] = useState('');
+    const [postDetail, setPostDetail] = useState('');
     const navigate = useNavigate();
     const user = useSelector(state => state.user);
+    const POST_STRING = 'http://localhost:5050/posts/';
 
     //useEffect(() => console.log(user), [])
 
     function handleTitleChange(e) {
-        setFeedbackTitle(e.target.value);
+        setPostTitle(e.target.value);
     }
 
     function handleDetailChange(e) {
-        setFeedbackDetail(e.target.value);
+        setPostDetail(e.target.value);
     }
 
     function handleCategoryChange(str) {
@@ -38,13 +39,13 @@ export default function NewFeedback() {
         e.preventDefault();
         
         const toSubmit = {
-            title: feedbackTitle,
+            title: postTitle,
             category: category,
-            description: feedbackDetail,
+            description: postDetail,
             creatorID: user.userID
         };
         
-        axios.post('http://localhost:5050/feedback', toSubmit)
+        axios.post(POST_STRING, toSubmit)
             .then(res => {
                 console.log(res)
                 navigate('/');
@@ -60,7 +61,7 @@ export default function NewFeedback() {
             </div>
 
             <div className="new-feedback__form-wrapper">
-                <img className='new-feedback__form-wrapper__img' src={newFeedbackIcon} alt='new feedback' />
+                <img className='new-feedback__form-wrapper__img' src={newPostIcon} alt='new feedback' />
                 <form className='new-feedback__form' onSubmit={handleSubmit}>
                     <p className='new-feedback__form__form-header'>Create New Feedback</p>
                     <div className='new-feedback__form__title'>

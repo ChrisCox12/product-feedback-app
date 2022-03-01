@@ -2,6 +2,7 @@ import express from "express";
 import { 
     getAllComments, 
     getComment, 
+    getAllChildrenOfParent,
     createComment, 
     updateComment,
     addReply 
@@ -11,6 +12,7 @@ const router = express.Router();
 
 router.get('/', getAllComments);
 router.get('/:id', getComment);
+router.get('/:id/children', getAllChildrenOfParent);
 
 router.post('/', createComment);
 

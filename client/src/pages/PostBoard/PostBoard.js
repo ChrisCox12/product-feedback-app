@@ -7,24 +7,26 @@ import plus from '../../assets/shared/icon-plus.svg';
 import arrowDown from '../../assets/shared/icon-arrow-down.svg';
 import arrowUp from '../../assets/shared/icon-arrow-up.svg';
 import emptyIllustration from '../../assets/suggestions/illustration-empty.svg';
-import './Suggestions.css';
+import './PostBoard.css';
 import '../SharedStyles/styles.css';
 
-import FeedbackCard from '../../components/FeedbackCard';
+import PostCard from '../../components/PostCard';
 
 import { useDispatch } from 'react-redux';
 import { signIn, setUser } from '../../actions';
 
 
-export default function Suggestions() {
+export default function PostBoard() {
     const [toggle, setToggle] = useState(false);
     const [toggleDrop, setToggleDrop] = useState(false);
     const [sortBy, setSortBy] = useState('sort');
-    const [isNoFeedback, setIsNoFeedback] = useState(false);
+    const [noPosts, setNoPosts] = useState(false);
     const [currentUser, setCurrentUser] = useState({ image: '', name: '', username: '' });
-    const [feedback, setFeedback] = useState([]);
+    const [posts, setPosts] = useState([]);
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const POST_STRING = 'http://localhost:5050/posts/';
+    const USER_STRING = 'http://localhost:5050/users/';
 
     /* useEffect(() => {
         setCurrentUser({
@@ -36,15 +38,15 @@ export default function Suggestions() {
     }, []) */
 
     useEffect(() => {
-        axios.get('http://localhost:5050/feedback')
+        axios.get(POST_STRING)
             .then(res => {
                 if (res.data.length === 0) {
                     //console.log('no data')
-                    setIsNoFeedback(true);
+                    setNoPosts(true);
                 }
                 else {
                     //console.log(res.data);
-                    setFeedback(res.data);
+                    setPosts(res.data);
                 }
             })
             .catch(err => console.log(err))
@@ -76,27 +78,27 @@ export default function Suggestions() {
     }, [toggleDrop]);
 
     useEffect(() => {
-        let s = [...feedback];
+        let s = [...posts];
         switch (sortBy) {
             case 'Most Upvotes':
                 insertionSort(s, s.length, 'mU');
                 //console.log(s);
-                setFeedback(s);
+                setPosts(s);
                 break;
             case 'Least Upvotes':
                 insertionSort(s, s.length, 'lU');
                 //console.log(s)
-                setFeedback(s);
+                setPosts(s);
                 break;
             case 'Most Comments':
                 insertionSort(s, s.length, 'mC');
                 //console.log(s);
-                setFeedback(s);
+                setPosts(s);
                 break;
             case 'Least Comments':
                 insertionSort(s, s.length, 'lC');
                 //console.log(s);
-                setFeedback(s);
+                setPosts(s);
                 break;
             default:
                 break;
@@ -180,7 +182,7 @@ export default function Suggestions() {
     }
 
     function signAndSet() {
-        axios.get('http://localhost:5050/users/'.concat('6201be50e0963bb111eed761'))
+        axios.get(USER_STRING.concat('6201be50e0963bb111eed761'))
             .then(res => {
                 //console.log(res.data)
                 dispatch(signIn());
@@ -190,7 +192,7 @@ export default function Suggestions() {
     }
 
     function signAndSet2() {
-        axios.get('http://localhost:5050/users/'.concat('62142a57f09c2c3bae9a3a8c'))
+        axios.get(USER_STRING.concat('62142a57f09c2c3bae9a3a8c'))
             .then(res => {
                 //console.log(res.data)
                 dispatch(signIn());
@@ -240,7 +242,7 @@ export default function Suggestions() {
             </div>
 
             <div className='suggestions__suggested-feedback'>
-                {isNoFeedback ?
+                {noPosts ?
                     <div className='no-feedback'>
                         <img src={emptyIllustration} alt='There is no feedback' />
                         <p>There is no feedback yet.</p>
@@ -252,8 +254,8 @@ export default function Suggestions() {
                         </button>
                     </div>
                     :
-                    feedback.map((item, index) => {
-                        return <FeedbackCard key={index} item={item} index={index} />
+                    posts.map((post, index) => {
+                        return <PostCard key={index} post={post} index={index} />
                     })
                 }
             </div>

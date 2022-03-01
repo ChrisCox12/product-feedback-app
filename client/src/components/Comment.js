@@ -3,8 +3,9 @@ import { useSelector } from 'react-redux';
 import axios from 'axios';
 import './Comment.css';
 import '../pages/SharedStyles/styles.css';
+import CommentReplies from './CommentReplies';
 
-export default function Comment({ commentId, rootCommentId, level, parentUsername, replyTo, totalComments, updateTotalComments, incrementTotalComments }) {
+export default function Comment({ comment }) {
   //console.log(commentId);
   const [name, setName] = useState('');
   const [username, setUsername] = useState('');
@@ -18,23 +19,21 @@ export default function Comment({ commentId, rootCommentId, level, parentUsernam
   const [parent, setParent] = useState('');
   const [rootId, setRootId] = useState('');
   const [replyingTo, setReplyingTo] = useState('');
+  const [hasRootId, setHasRootId] = useState(false);
 
   useEffect(() => {
-    axios.get('http://localhost:5050/comments/'.concat(commentId))
-      .then(res => {
-        console.log(res.data);
-        setName(res.data.creator.name);
-        setUsername(res.data.creator.username);
-        setText(res.data.content);
-        setReplies(res.data.replies);
-        setIsReply(res.data.isReply);
-        setParent(parentUsername);
-        setRootId(rootCommentId);
-        //setReplyingTo(replyTo);
-        res.data.hasRootId ? setReplyingTo(res.data.replyTo) : setReplyingTo(res.data.creator.username);
-      })
-      .catch(err => console.log(err))
-  }, [commentId])
+    setText(comment.content);
+    setName(comment.creator.name);
+    setUsername(comment.creator.username);
+    setReplies(comment.replies);
+    setHasRootId(comment.hasRootId);
+  }, [comment]);
+
+  useEffect(() => {
+    if(hasRootId) {
+      //const c = document.getElementById
+    }
+  }, [hasRootId])
 
   function handleReplyChange(e) {
     setReplyText(e.target.value);
@@ -48,7 +47,7 @@ export default function Comment({ commentId, rootCommentId, level, parentUsernam
     //const newTotalComments = totalComments + 1;
     //updateTotalComments(newTotalComments);
 
-    incrementTotalComments();
+    
     
     const toSubmit = {
       content: replyText,
@@ -63,18 +62,7 @@ export default function Comment({ commentId, rootCommentId, level, parentUsernam
       replyTo: replyingTo
     }
 
-    axios.post('http://localhost:5050/comments', toSubmit)
-      .then(res => {
-        //const newReplies = [...replies];
-        //newReplies.push(res.data);
-
-        //setReplies(newReplies);
-        console.log(res.data)
-        axios.patch('http://localhost:5050/comments/'.concat(rootId, '/', res.data))
-          .then(res => console.log(res.data))
-          .catch(err => console.log(err))
-      })
-      .catch(err => console.log(err))
+    
   }
 
 
@@ -93,7 +81,6 @@ export default function Comment({ commentId, rootCommentId, level, parentUsernam
         >Reply</button>  
       </div>
       <div className='comment__body'>
-        {/* {parent.length > 0 && <span>@{parent}</span>} {' '} */}
         {replyingTo.length > 0 && <span>@{replyingTo}</span>} {' '}
         {text}
       </div>
@@ -112,41 +99,10 @@ export default function Comment({ commentId, rootCommentId, level, parentUsernam
           </form>
         </div>
       }
+      
       {replies.length > 0 && 
-        <div className='comment__replies'>
-          {replies.map((reply, index) => {
-            return (
-              <Comment 
-                commentId={reply} 
-                rootCommentId={rootId}
-                key={index} 
-                level={2} 
-                parentUsername={username}
-                replyTo={replyingTo}
-                incrementTotalComments={incrementTotalComments}
-              />
-            )
-          })}
-        </div>
+        <CommentReplies />
       }
-      {/* <div className='comment__head'>
-        <div className='comment__head__user'>
-          <img className='comment__head__user__image' />
-          <div className='comment__head__user__user-info'>
-            <p className='comment__head__user__user-info__name'>{comment.creator.name}</p>
-            <p className='comment__head__user__user-info__username'>@{comment.creator.username}</p>
-          </div>
-        </div>
-        <button className='comment__head__reply'>Reply</button>
-      </div>
-      <div className='comment__body'>{comment.content}</div>
-      {comment.replies?.length > 0 && 
-        <div className='comment__replies'>
-          {comment.replies?.map((reply, index) => {
-            return <Comment />
-          })}
-        </div>
-      } */}
     </div>
   )
 }
